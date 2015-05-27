@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+root="$(realpath .)"
+build="$(realpath build)"
+
+mkdir -p $build
+
+echo "$build/linux-debug.ninja"
+cat - build.ninja.template <<DOC > $build/linux-debug.ninja
+src = $root/src
+outdir = $build/linux-debug
+cxx = clang++
+cxxflags = -Wall -Wextra -Wconversion -Wshadow -g -Xclang -fcolor-diagnostics
+ldflags =
+DOC
+
+echo "$build/linux-release.ninja"
+cat - build.ninja.template <<DOC > $build/linux-release.ninja
+src = $root/src
+outdir = $build/linux-release
+cxx = g++
+cxxflags = -Wall -O3 -march=native
+ldflags =
+DOC
+
+echo "$build/linux-extreme.ninja"
+cat - build.ninja.template <<DOC > $build/linux-extreme.ninja
+src = $root/src
+outdir = $build/linux-extreme
+cxx = g++
+cxxflags = -Wall -Ofast -march=native -flto
+ldflags = -flto
+DOC
+
+echo "$build/arm-release.ninja"
+cat - build.ninja.template <<DOC > $build/arm-release.ninja
+src = $root/src
+outdir = $build/arm-release
+ar = arm-linux-androideabi-ar
+cxx = arm-linux-androideabi-g++
+cxxflags = -Wall -DNDEBUG -O3 -march=armv7-a -mfpu=neon -mfloat-abi=softfp
+ldflags =
+DOC
