@@ -148,7 +148,7 @@ void compress_block(const unorm8_t texels[BLOCK_TEXEL_COUNT],
   }
 
   vec3i_t a, b;
-  bounding_box_block(texels, a, b);
+  bounding_box_optimal_diagonal_block(texels, a, b);
   vec3f_t m = to_vec3f(a);
   vec3f_t k = signorm(to_vec3f(b) - to_vec3f(a));
   vec3f_t e0, e1;
