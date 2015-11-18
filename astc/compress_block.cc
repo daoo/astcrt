@@ -8,6 +8,7 @@
 #include "astc/constants.h"
 #include "astc/data_size.h"
 #include "astc/endpoints.h"
+#include "astc/endpoints_bounding_box.h"
 #include "astc/endpoints_encode.h"
 #include "astc/endpoints_min_max.h"
 #include "astc/endpoints_principal_components.h"
@@ -146,8 +147,10 @@ void compress_block(const unorm8_t texels[BLOCK_TEXEL_COUNT],
     }
   }
 
-  vec3f_t k, m;
-  principal_component_analysis_block(texels, k, m);
+  vec3i_t a, b;
+  bounding_box_block(texels, a, b);
+  vec3f_t m = to_vec3f(a);
+  vec3f_t k = signorm(to_vec3f(b) - to_vec3f(a));
   vec3f_t e0, e1;
   find_min_max_block(texels, k, m, e0, e1);
   encode_rgb_single_partition(texels, e0, e1, physical_block);
