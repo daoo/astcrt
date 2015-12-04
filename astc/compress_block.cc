@@ -78,7 +78,7 @@ void encode_rgb_single_partition(const unorm8_t texels[BLOCK_TEXEL_COUNT],
 
   vec3i_t endpoint_unquantized[2];
   uint8_t endpoint_quantized[6];
-  encode_rgb_direct(endpoint_quant, round(e0), round(e1), endpoint_quantized,
+  encode_rgb_direct(endpoint_quant, e0, e1, endpoint_quantized,
                     endpoint_unquantized);
 
   uint8_t weights_quantized[BLOCK_TEXEL_COUNT];
