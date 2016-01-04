@@ -29,6 +29,24 @@ TEST_CASE("getbits", "[bitmanip]") {
   REQUIRE(getbits(number, 7, 4) == 0xB);
 }
 
+TEST_CASE("setbit", "[bitmanip]") {
+  uint16_t number = 0;
+  for (size_t i = 0; i < 16; ++i) {
+    setbit(number, i, 1);
+  }
+  REQUIRE(number == 0xFFFF);
+
+  for (size_t i = 0; i < 16; ++i) {
+    setbit(number, i, 1);
+  }
+  REQUIRE(number == 0xFFFF);
+
+  for (size_t i = 0; i < 16; ++i) {
+    setbit(number, i, 0);
+  }
+  REQUIRE(number == 0);
+}
+
 TEST_CASE("orbits8_ptr", "[bitmanip]") {
   {
     uint32_t number = 0;

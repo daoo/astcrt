@@ -64,21 +64,53 @@ void calculate_quantized_weights_luminance(
   }
 }
 
-void calculate_quantized_weights_rgb(const unorm8_t texels[BLOCK_TEXEL_COUNT],
-                                     range_t quant,
-                                     vec3i_t e0,
-                                     vec3i_t e1,
-                                     uint8_t weights[BLOCK_TEXEL_COUNT]) {
-  if (e0 == e1) {
+void calculate_quantized_weights_rgb_single_partition(
+    const unorm8_t texels[BLOCK_TEXEL_COUNT],
+    range_t quant,
+    const vec3i_t endpoints[2],
+    uint8_t weights[BLOCK_TEXEL_COUNT]) {
+  if (endpoints[0] == endpoints[1]) {
     for (size_t i = 0; i < BLOCK_TEXEL_COUNT; ++i) {
       weights[i] = 0;  // quantize_weight(quant, 0) is always 0
     }
   } else {
-    vec3i_t k = e1 - e0;
-    vec3i_t m = e0;
+    vec3i_t k = endpoints[1] - endpoints[0];
+    vec3i_t m = endpoints[0];
 
     int kk = dot(k, k);
     for (size_t i = 0; i < BLOCK_TEXEL_COUNT; ++i) {
+      weights[i] =
+          quantize_weight(quant, project(k, kk, m, to_vec3i(texels[i])));
+    }
+  }
+}
+
+void calculate_quantized_weights_rgb_two_partitions(
+    const unorm8_t texels[BLOCK_TEXEL_COUNT],
+    const uint16_t partition_mask,
+    const vec3i_t endpoints[2][2],
+    range_t quant,
+    uint8_t weights[BLOCK_TEXEL_COUNT]) {
+  vec3i_t ks[2] = {endpoints[0][1] - endpoints[0][0],
+                   endpoints[1][1] - endpoints[1][0]};
+
+  int kks[2] = {dot(ks[0], ks[0]), dot(ks[1], ks[1])};
+
+  vec3i_t ms[2] = {endpoints[0][0], endpoints[1][0]};
+
+  for (size_t i = 0; i < BLOCK_TEXEL_COUNT; ++i) {
+    size_t j = getbit(partition_mask, i);
+
+    vec3i_t e0 = endpoints[j][0];
+    vec3i_t e1 = endpoints[j][1];
+
+    if (e0 == e1) {
+      weights[i] = 0;  // quantize_weight(quant, 0) is always 0
+    } else {
+      vec3i_t k = ks[j];
+      vec3i_t m = ms[j];
+
+      int kk = kks[j];
       weights[i] =
           quantize_weight(quant, project(k, kk, m, to_vec3i(texels[i])));
     }

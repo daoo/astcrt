@@ -20,6 +20,11 @@ inline size_t getbits(size_t number, size_t msb, size_t lsb) {
   return (number >> lsb) & (static_cast<size_t>(1 << count) - 1);
 }
 
+inline void setbit(uint16_t& w, size_t n, bool f) {
+  DCHECK(n < 16);
+  w ^= (-f ^ w) & (1 << n);
+}
+
 inline void orbits8_ptr(uint8_t* ptr,
                         size_t bitoffset,
                         size_t number,
