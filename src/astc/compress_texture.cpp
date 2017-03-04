@@ -6,22 +6,19 @@
 #include "astc/constants.hpp"
 #include "astc/store_block.hpp"
 
-namespace
-{
+namespace {
 
-void fetch_image_block(
-    const unorm8_t* source,
-    size_t image_width,
-    size_t xpos,
-    size_t ypos,
-    unorm8_t texels[BLOCK_TEXEL_COUNT])
-{
+void fetch_image_block(const unorm8_t* source,
+                       size_t image_width,
+                       size_t xpos,
+                       size_t ypos,
+                       unorm8_t texels[BLOCK_TEXEL_COUNT]) {
   size_t topleft_index = ypos * image_width + xpos;
 
   const unorm8_t* row0 = source + topleft_index;
   const unorm8_t* row1 = row0 + image_width;
-  const unorm8_t* row2 = row0 + 2*image_width;
-  const unorm8_t* row3 = row0 + 3*image_width;
+  const unorm8_t* row2 = row0 + 2 * image_width;
+  const unorm8_t* row3 = row0 + 3 * image_width;
 
   texels[0] = row0[0];
   texels[1] = row0[1];
@@ -45,15 +42,12 @@ void fetch_image_block(
 }
 
 PhysicalBlock physical_block_zero = {0};
-
 }
 
-void compress_texture(
-    const uint8_t* src,
-    uint8_t* dst,
-    int width_int,
-    int height_int)
-{
+void compress_texture(const uint8_t* src,
+                      uint8_t* dst,
+                      int width_int,
+                      int height_int) {
   const unorm8_t* data = reinterpret_cast<const unorm8_t*>(src);
 
   size_t width = static_cast<size_t>(width_int);

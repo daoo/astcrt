@@ -3,11 +3,17 @@
 
 #include <math.h>
 
-template<typename T> T min(T a, T b) { return a <= b ? a : b; }
-template<typename T> T max(T a, T b) { return a >= b ? a : b; }
+template <typename T>
+T min(T a, T b) {
+  return a <= b ? a : b;
+}
+template <typename T>
+T max(T a, T b) {
+  return a >= b ? a : b;
+}
 
-template<typename T> T clamp(T a, T b, T x)
-{
+template <typename T>
+T clamp(T a, T b, T x) {
   if (x < a) {
     return a;
   }
@@ -19,8 +25,7 @@ template<typename T> T clamp(T a, T b, T x)
   return x;
 }
 
-inline bool approx_equal(float x, float y, float epsilon)
-{
+inline bool approx_equal(float x, float y, float epsilon) {
   return fabs(x - y) < epsilon;
 }
 

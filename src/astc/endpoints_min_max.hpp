@@ -9,14 +9,12 @@
 #include "astc/misc.hpp"
 #include "astc/vector.hpp"
 
-void find_min_max(
-    const unorm8_t texels[BLOCK_TEXEL_COUNT],
-    size_t count,
-    vec3f_t line_k,
-    vec3f_t line_m,
-    vec3f_t& e0,
-    vec3f_t& e1)
-{
+void find_min_max(const unorm8_t texels[BLOCK_TEXEL_COUNT],
+                  size_t count,
+                  vec3f_t line_k,
+                  vec3f_t line_m,
+                  vec3f_t& e0,
+                  vec3f_t& e1) {
   DCHECK(count <= BLOCK_TEXEL_COUNT);
   DCHECK(approx_equal(quadrance(line_k), 1.0, 0.0001f));
 
@@ -33,17 +31,15 @@ void find_min_max(
     b = max(b, t);
   }
 
-  e0 = clamp_rgb(line_k*a + line_m);
-  e1 = clamp_rgb(line_k*b + line_m);
+  e0 = clamp_rgb(line_k * a + line_m);
+  e1 = clamp_rgb(line_k * b + line_m);
 }
 
-void find_min_max_block(
-    const unorm8_t texels[BLOCK_TEXEL_COUNT],
-    vec3f_t line_k,
-    vec3f_t line_m,
-    vec3f_t& e0,
-    vec3f_t& e1)
-{
+void find_min_max_block(const unorm8_t texels[BLOCK_TEXEL_COUNT],
+                        vec3f_t line_k,
+                        vec3f_t line_m,
+                        vec3f_t& e0,
+                        vec3f_t& e1) {
   find_min_max(texels, BLOCK_TEXEL_COUNT, line_k, line_m, e0, e1);
 }
 

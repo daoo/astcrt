@@ -6,8 +6,7 @@
 
 static int MAGIC_FILE_CONSTANT = 0x5CA1AB13;
 
-struct ASTCHeader
-{
+struct ASTCHeader {
   uint8_t magic[4];
   uint8_t blockdim_x;
   uint8_t blockdim_y;
@@ -17,8 +16,7 @@ struct ASTCHeader
   uint8_t zsize[3];
 };
 
-void WriteASTCFile(const CompressedImage& compressed, const char* file_path)
-{
+void WriteASTCFile(const CompressedImage& compressed, const char* file_path) {
   FILE* file = fopen(file_path, "w");
   if (!file) {
     throw "could not open file for writing";

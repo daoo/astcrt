@@ -11,10 +11,6 @@
  * @param width The width of the input texture.
  * @param height The height of the input texture.
  */
-void compress_texture(
-    const uint8_t* src,
-    uint8_t* dst,
-    int width,
-    int height);
+void compress_texture(const uint8_t* src, uint8_t* dst, int width, int height);
 
 #endif /* end of include guard: COMPRESS_TEXTURE_H_VYGPWUPA */

@@ -7,8 +7,7 @@
  * Define normalized (starting at zero) numeric ranges that can be represented
  * with 8 bits or less.
  */
-enum range_t
-{
+enum range_t {
   RANGE_2,
   RANGE_3,
   RANGE_4,
@@ -36,29 +35,8 @@ enum range_t
 /**
  * Table of maximum value for each range, minimum is always zero.
  */
-const uint8_t range_max_table[RANGE_MAX] =
-{
-  1,
-  2,
-  3,
-  4,
-  5,
-  7,
-  9,
-  11,
-  15,
-  19,
-  23,
-  31,
-  39,
-  47,
-  63,
-  79,
-  95,
-  127,
-  159,
-  191,
-  255
-};
+const uint8_t range_max_table[RANGE_MAX] = {1,  2,  3,  4,   5,   7,   9,
+                                            11, 15, 19, 23,  31,  39,  47,
+                                            63, 79, 95, 127, 159, 191, 255};
 
 #endif /* end of include guard: RANGE_H_CUU3BYDY */

@@ -13,43 +13,40 @@
  * Table that describes the number of trits or quints along with bits required
  * for storing each range.
  */
-const uint8_t bits_trits_quints_table[RANGE_MAX][3] =
-{
-  {1, 0, 0}, // RANGE_2
-  {0, 1, 0}, // RANGE_3
-  {2, 0, 0}, // RANGE_4
-  {0, 0, 1}, // RANGE_5
-  {1, 1, 0}, // RANGE_6
-  {3, 0, 0}, // RANGE_8
-  {1, 0, 1}, // RANGE_10
-  {2, 1, 0}, // RANGE_12
-  {4, 0, 0}, // RANGE_16
-  {2, 0, 1}, // RANGE_20
-  {3, 1, 0}, // RANGE_24
-  {5, 0, 0}, // RANGE_32
-  {3, 0, 1}, // RANGE_40
-  {4, 1, 0}, // RANGE_48
-  {6, 0, 0}, // RANGE_64
-  {4, 0, 1}, // RANGE_80
-  {5, 1, 0}, // RANGE_96
-  {7, 0, 0}, // RANGE_128
-  {5, 0, 1}, // RANGE_160
-  {6, 1, 0}, // RANGE_192
-  {8, 0, 0}  // RANGE_256
+const uint8_t bits_trits_quints_table[RANGE_MAX][3] = {
+    {1, 0, 0},  // RANGE_2
+    {0, 1, 0},  // RANGE_3
+    {2, 0, 0},  // RANGE_4
+    {0, 0, 1},  // RANGE_5
+    {1, 1, 0},  // RANGE_6
+    {3, 0, 0},  // RANGE_8
+    {1, 0, 1},  // RANGE_10
+    {2, 1, 0},  // RANGE_12
+    {4, 0, 0},  // RANGE_16
+    {2, 0, 1},  // RANGE_20
+    {3, 1, 0},  // RANGE_24
+    {5, 0, 0},  // RANGE_32
+    {3, 0, 1},  // RANGE_40
+    {4, 1, 0},  // RANGE_48
+    {6, 0, 0},  // RANGE_64
+    {4, 0, 1},  // RANGE_80
+    {5, 1, 0},  // RANGE_96
+    {7, 0, 0},  // RANGE_128
+    {5, 0, 1},  // RANGE_160
+    {6, 1, 0},  // RANGE_192
+    {8, 0, 0}   // RANGE_256
 };
 
 /**
  * Encode a group of 5 numbers using trits and bits.
  */
-inline void encode_trits(
-    size_t bits,
-    uint8_t b0,
-    uint8_t b1,
-    uint8_t b2,
-    uint8_t b3,
-    uint8_t b4,
-    bitwriter& writer)
-{
+inline void encode_trits(size_t bits,
+                         uint8_t b0,
+                         uint8_t b1,
+                         uint8_t b2,
+                         uint8_t b3,
+                         uint8_t b4,
+                         bitwriter& writer) {
   uint8_t t0, t1, t2, t3, t4;
   uint8_t m0, m1, m2, m3, m4;
 
@@ -82,13 +79,11 @@ inline void encode_trits(
 /**
  * Encode a group of 3 numbers using quints and bits.
  */
-inline void encode_quints(
-    size_t bits,
-    uint8_t b0,
-    uint8_t b1,
-    uint8_t b2,
-    bitwriter& writer)
-{
+inline void encode_quints(size_t bits,
+                          uint8_t b0,
+                          uint8_t b1,
+                          uint8_t b2,
+                          bitwriter& writer) {
   uint8_t q0, q1, q2;
   uint8_t m0, m1, m2;
 
@@ -114,18 +109,16 @@ inline void encode_quints(
  * Encode a sequence of numbers using using one trit and a custom number of
  * bits per number.
  */
-inline void encode_trits(
-    const uint8_t* numbers,
-    size_t count,
-    bitwriter& writer,
-    size_t bits)
-{
+inline void encode_trits(const uint8_t* numbers,
+                         size_t count,
+                         bitwriter& writer,
+                         size_t bits) {
   for (size_t i = 0; i < count; i += 5) {
-    uint8_t b0 = numbers[i+0];
-    uint8_t b1 = i+1 >= count ? 0 : numbers[i+1];
-    uint8_t b2 = i+2 >= count ? 0 : numbers[i+2];
-    uint8_t b3 = i+3 >= count ? 0 : numbers[i+3];
-    uint8_t b4 = i+4 >= count ? 0 : numbers[i+4];
+    uint8_t b0 = numbers[i + 0];
+    uint8_t b1 = i + 1 >= count ? 0 : numbers[i + 1];
+    uint8_t b2 = i + 2 >= count ? 0 : numbers[i + 2];
+    uint8_t b3 = i + 3 >= count ? 0 : numbers[i + 3];
+    uint8_t b4 = i + 4 >= count ? 0 : numbers[i + 4];
 
     encode_trits(bits, b0, b1, b2, b3, b4, writer);
   }
@@ -135,16 +128,14 @@ inline void encode_trits(
  * Encode a sequence of numbers using one quint and the custom number of bits
  * per number.
  */
-inline void encode_quints(
-    const uint8_t* numbers,
-    size_t count,
-    bitwriter& writer,
-    size_t bits)
-{
+inline void encode_quints(const uint8_t* numbers,
+                          size_t count,
+                          bitwriter& writer,
+                          size_t bits) {
   for (size_t i = 0; i < count; i += 3) {
-    uint8_t b0 = numbers[i+0];
-    uint8_t b1 = i+1 >= count ? 0 : numbers[i+1];
-    uint8_t b2 = i+2 >= count ? 0 : numbers[i+2];
+    uint8_t b0 = numbers[i + 0];
+    uint8_t b1 = i + 1 >= count ? 0 : numbers[i + 1];
+    uint8_t b2 = i + 2 >= count ? 0 : numbers[i + 2];
     encode_quints(bits, b0, b1, b2, writer);
   }
 }
@@ -153,12 +144,10 @@ inline void encode_quints(
  * Encode a sequence of numbers using binary representation with the selected
  * bit count.
  */
-inline void encode_binary(
-    const uint8_t* numbers,
-    size_t count,
-    bitwriter& writer,
-    size_t bits)
-{
+inline void encode_binary(const uint8_t* numbers,
+                          size_t count,
+                          bitwriter& writer,
+                          size_t bits) {
   DCHECK(count > 0);
   for (size_t i = 0; i < count; ++i) {
     writer.write8(numbers[i], bits);
@@ -170,12 +159,10 @@ inline void encode_binary(
  * sequence encoding. The numbers are assumed to be in the correct range and
  * the memory we are writing to is assumed to be zero-initialized.
  */
-inline void integer_sequence_encode(
-    const uint8_t* numbers,
-    size_t count,
-    range_t range,
-    bitwriter writer)
-{
+inline void integer_sequence_encode(const uint8_t* numbers,
+                                    size_t count,
+                                    range_t range,
+                                    bitwriter writer) {
 #ifndef NDEBUG
   for (size_t i = 0; i < count; ++i) {
     DCHECK(numbers[i] <= range_max_table[range]);
@@ -195,25 +182,18 @@ inline void integer_sequence_encode(
   }
 }
 
-inline void integer_sequence_encode(
-    const uint8_t* numbers,
-    size_t count,
-    range_t range,
-    uint8_t* output)
-{
-  integer_sequence_encode(
-      numbers,
-      count,
-      range,
-      bitwriter(output));
+inline void integer_sequence_encode(const uint8_t* numbers,
+                                    size_t count,
+                                    range_t range,
+                                    uint8_t* output) {
+  integer_sequence_encode(numbers, count, range, bitwriter(output));
 }
 
 /**
  * Compute the number of bits required to store a number of items in a specific
  * range using the binary integer sequence encoding.
  */
-inline size_t compute_ise_bitcount(size_t items, range_t range)
-{
+inline size_t compute_ise_bitcount(size_t items, range_t range) {
   size_t bits = bits_trits_quints_table[range][0];
   size_t trits = bits_trits_quints_table[range][1];
   size_t quints = bits_trits_quints_table[range][2];

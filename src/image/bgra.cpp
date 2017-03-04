@@ -3,8 +3,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
-struct TGAHeader
-{
+struct TGAHeader {
   uint8_t id_length;
   uint8_t color_map_type;
   uint8_t image_type;
@@ -19,17 +18,16 @@ struct TGAHeader
   uint8_t image_descriptor;
 };
 
-void WriteTGAFile(const BgraImage& image, const char* file_path)
-{
+void WriteTGAFile(const BgraImage& image, const char* file_path) {
   FILE* file = fopen(file_path, "w");
   if (!file) {
     throw "could not open file for writing";
   }
 
   TGAHeader hdr;
-  hdr.id_length = 0x00; // No id field
-  hdr.color_map_type = 0x00; // No colormap
-  hdr.image_type = 0x02; // Uncompressed true color
+  hdr.id_length = 0x00;       // No id field
+  hdr.color_map_type = 0x00;  // No colormap
+  hdr.image_type = 0x02;      // Uncompressed true color
 
   // Color map unused, set to zero
   hdr.first_entry_index[0] = 0x00;
@@ -54,8 +52,7 @@ void WriteTGAFile(const BgraImage& image, const char* file_path)
   fclose(file);
 }
 
-BgraImage ReadTGAFile(const char* file_path)
-{
+BgraImage ReadTGAFile(const char* file_path) {
   FILE* file = fopen(file_path, "r");
   if (!file) {
     throw "could not open file for reading";
@@ -101,19 +98,18 @@ BgraImage ReadTGAFile(const char* file_path)
 
   fseek(file, hdr.id_length, SEEK_CUR);
 
-  size_t width  = (hdr.width[1] << 8) | hdr.width[0];
+  size_t width = (hdr.width[1] << 8) | hdr.width[0];
   size_t height = (hdr.height[1] << 8) | hdr.height[0];
 
   BgraImage image(width, height);
   if (hdr.pixel_depth == 32) {
     fread(image.buffer, 1, image.buffer_size, file);
-  }
-  else if (hdr.pixel_depth == 24) {
-    size_t byte_count = image.pixel_count*3;
+  } else if (hdr.pixel_depth == 24) {
+    size_t byte_count = image.pixel_count * 3;
     uint8_t* ptr = new uint8_t[byte_count];
     fread(ptr, 1, byte_count, file);
     for (size_t i = 0; i < image.pixel_count; ++i) {
-      uint8_t* ptr_ = ptr + i*3;
+      uint8_t* ptr_ = ptr + i * 3;
       image.buffer[i].channels.r = ptr_[2];
       image.buffer[i].channels.g = ptr_[1];
       image.buffer[i].channels.b = ptr_[0];

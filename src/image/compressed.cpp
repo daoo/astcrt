@@ -3,8 +3,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
-struct CompressedHeader
-{
+struct CompressedHeader {
   uint8_t magic[4];
   uint8_t xdim;
   uint8_t ydim;
@@ -13,11 +12,9 @@ struct CompressedHeader
   uint8_t bytes_per_block;
 };
 
-void WriteCompressedFile(
-    uint32_t magic,
-    const CompressedImage& compressed,
-    const char* file_path)
-{
+void WriteCompressedFile(uint32_t magic,
+                         const CompressedImage& compressed,
+                         const char* file_path) {
   FILE* file = fopen(file_path, "w");
   if (!file) {
     throw "could not open file for writing";
@@ -43,10 +40,7 @@ void WriteCompressedFile(
   fclose(file);
 }
 
-CompressedImage ReadCompressedFile(
-    uint32_t magic,
-    const char* file_path)
-{
+CompressedImage ReadCompressedFile(uint32_t magic, const char* file_path) {
   FILE* file = fopen(file_path, "r");
   if (!file) {
     throw "could not open file for reading";
@@ -55,11 +49,8 @@ CompressedImage ReadCompressedFile(
   CompressedHeader hdr;
   fread(&hdr, 1, sizeof(CompressedHeader), file);
 
-  uint32_t magic_ =
-    (hdr.magic[3] << 24) |
-    (hdr.magic[2] << 16) |
-    (hdr.magic[1] << 8) |
-    (hdr.magic[0]);
+  uint32_t magic_ = (hdr.magic[3] << 24) | (hdr.magic[2] << 16) |
+                    (hdr.magic[1] << 8) | (hdr.magic[0]);
 
   if (magic != magic_) {
     fclose(file);
@@ -69,7 +60,8 @@ CompressedImage ReadCompressedFile(
   size_t xsize = (hdr.xsize[2] << 16) | (hdr.xsize[1] << 8) | hdr.xsize[0];
   size_t ysize = (hdr.ysize[2] << 16) | (hdr.ysize[1] << 8) | hdr.ysize[0];
 
-  CompressedImage compressed(xsize, ysize, hdr.xdim, hdr.ydim, hdr.bytes_per_block);
+  CompressedImage compressed(
+      xsize, ysize, hdr.xdim, hdr.ydim, hdr.bytes_per_block);
   fread(compressed.buffer, 1, compressed.buffer_size, file);
   fclose(file);
 

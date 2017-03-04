@@ -5,8 +5,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-TEST_CASE("getbit", "[bitmanip]")
-{
+TEST_CASE("getbit", "[bitmanip]") {
   {
     for (size_t i = 0; i < 8; ++i) {
       REQUIRE_FALSE(getbit(0x00, i));
@@ -24,15 +23,13 @@ TEST_CASE("getbit", "[bitmanip]")
   REQUIRE_FALSE(getbit(0x01, 2));
 }
 
-TEST_CASE("getbits", "[bitmanip]")
-{
+TEST_CASE("getbits", "[bitmanip]") {
   uint8_t number = 0xBA;
   REQUIRE(getbits(number, 3, 0) == 0xA);
   REQUIRE(getbits(number, 7, 4) == 0xB);
 }
 
-TEST_CASE("orbits8_ptr", "[bitmanip]")
-{
+TEST_CASE("orbits8_ptr", "[bitmanip]") {
   {
     uint32_t number = 0;
     uint8_t* data = reinterpret_cast<uint8_t*>(&number);
@@ -59,8 +56,7 @@ TEST_CASE("orbits8_ptr", "[bitmanip]")
   }
 }
 
-TEST_CASE("orbits16_ptr", "[bitmanip]")
-{
+TEST_CASE("orbits16_ptr", "[bitmanip]") {
   {
     uint32_t number = 0;
     uint8_t* data = reinterpret_cast<uint8_t*>(&number);
@@ -90,8 +86,7 @@ TEST_CASE("orbits16_ptr", "[bitmanip]")
   }
 }
 
-TEST_CASE("getbytes2", "[bitmanip]")
-{
+TEST_CASE("getbytes2", "[bitmanip]") {
   uint32_t number = 0x12ABCDEF;
   uint8_t* data = reinterpret_cast<uint8_t*>(&number);
   REQUIRE(getbytes2(data, 0) == 0xCDEF);
@@ -99,8 +94,7 @@ TEST_CASE("getbytes2", "[bitmanip]")
   REQUIRE(getbytes2(data, 2) == 0x12AB);
 }
 
-TEST_CASE("setbytes2", "[bitmanip]")
-{
+TEST_CASE("setbytes2", "[bitmanip]") {
   uint32_t number = 0;
   uint8_t* data = reinterpret_cast<uint8_t*>(&number);
 
@@ -121,8 +115,7 @@ TEST_CASE("setbytes2", "[bitmanip]")
   REQUIRE(data[3] == 0x00);
 }
 
-TEST_CASE("split_high_low", "[bitmanip]")
-{
+TEST_CASE("split_high_low", "[bitmanip]") {
   {
     uint8_t number = 0xAB;
     uint8_t high, low;
@@ -146,8 +139,7 @@ TEST_CASE("split_high_low", "[bitmanip]")
   }
 }
 
-TEST_CASE("bitwriter", "[bitmanip]")
-{
+TEST_CASE("bitwriter", "[bitmanip]") {
   uint32_t number = 0;
   bitwriter w(reinterpret_cast<uint8_t*>(&number));
 
@@ -165,22 +157,18 @@ TEST_CASE("bitwriter", "[bitmanip]")
   REQUIRE(number == 0x00FF0AFF);
 }
 
-TEST_CASE("reverse_byte", "[bitmanip]")
-{
+TEST_CASE("reverse_byte", "[bitmanip]") {
   for (size_t i = 0; i < 256; ++i) {
     REQUIRE(reverse_byte(reverse_byte(static_cast<uint8_t>(i))) == i);
   }
 }
 
-TEST_CASE("reverse_bytes", "[bitmanip]")
-{
+TEST_CASE("reverse_bytes", "[bitmanip]") {
   {
     uint32_t a = 0xF0F0F0F0;
     uint32_t b = 0;
     reverse_bytes(
-        reinterpret_cast<uint8_t*>(&a),
-        4,
-        reinterpret_cast<uint8_t*>(&b)+3);
+        reinterpret_cast<uint8_t*>(&a), 4, reinterpret_cast<uint8_t*>(&b) + 3);
 
     REQUIRE(b == 0x0F0F0F0F);
   }
@@ -189,9 +177,7 @@ TEST_CASE("reverse_bytes", "[bitmanip]")
     uint32_t a = 0x0000000F;
     uint32_t b = 0;
     reverse_bytes(
-        reinterpret_cast<uint8_t*>(&a),
-        1,
-        reinterpret_cast<uint8_t*>(&b)+3);
+        reinterpret_cast<uint8_t*>(&a), 1, reinterpret_cast<uint8_t*>(&b) + 3);
 
     REQUIRE(b == 0xF0000000);
   }
@@ -200,9 +186,7 @@ TEST_CASE("reverse_bytes", "[bitmanip]")
     uint32_t a = 0x000ED76D;
     uint32_t b = 0;
     reverse_bytes(
-        reinterpret_cast<uint8_t*>(&a),
-        3,
-        reinterpret_cast<uint8_t*>(&b)+3);
+        reinterpret_cast<uint8_t*>(&a), 3, reinterpret_cast<uint8_t*>(&b) + 3);
 
     REQUIRE(b == 0xB6EB7000);
   }
@@ -212,9 +196,7 @@ TEST_CASE("reverse_bytes", "[bitmanip]")
     uint32_t a = 0x000FFFFF;
     uint32_t b = 0x00000FFF;
     reverse_bytes(
-        reinterpret_cast<uint8_t*>(&a),
-        3,
-        reinterpret_cast<uint8_t*>(&b)+3);
+        reinterpret_cast<uint8_t*>(&a), 3, reinterpret_cast<uint8_t*>(&b) + 3);
     REQUIRE(b == 0xFFFFFFFF);
   }
 }

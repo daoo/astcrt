@@ -11,27 +11,21 @@
 #include "image/bgra.hpp"
 #include "image/compressed.hpp"
 
-namespace
-{
+namespace {
 
-int64_t usecs_passed(const timeval& t1, const timeval& t2)
-{
+int64_t usecs_passed(const timeval& t1, const timeval& t2) {
   return (t2.tv_sec - t1.tv_sec) * 1000000 + (t2.tv_usec - t1.tv_usec);
 }
 
-void compress_astc(const BgraImage& image, CompressedImage& compressed)
-{
-  compress_texture(
-      reinterpret_cast<uint8_t*>(image.buffer),
-      compressed.buffer,
-      static_cast<int>(image.width),
-      static_cast<int>(image.height));
+void compress_astc(const BgraImage& image, CompressedImage& compressed) {
+  compress_texture(reinterpret_cast<uint8_t*>(image.buffer),
+                   compressed.buffer,
+                   static_cast<int>(image.width),
+                   static_cast<int>(image.height));
+}
 }
 
-}
-
-int main(int argc, const char** argv)
-{
+int main(int argc, const char** argv) {
   if (argc < 3 || argc > 4) {
     fprintf(stderr, "Usage: %s [-q | --quiet] INPUT OUTPUT\n", argv[0]);
     return 1;
@@ -46,18 +40,14 @@ int main(int argc, const char** argv)
     quiet = true;
     ++i;
   }
-  input  = argv[i];
-  output = argv[i+1];
+  input = argv[i];
+  output = argv[i + 1];
 
   try {
     BgraImage image = ReadTGAFile(input);
 
     CompressedImage compressed(
-        image.width,
-        image.height,
-        BLOCK_WIDTH,
-        BLOCK_HEIGHT,
-        BLOCK_BYTES);
+        image.width, image.height, BLOCK_WIDTH, BLOCK_HEIGHT, BLOCK_BYTES);
 
     if (quiet) {
       compress_astc(image, compressed);
@@ -65,9 +55,9 @@ int main(int argc, const char** argv)
       timeval t1;
       gettimeofday(&t1, NULL);
       compress_astc(image, compressed);
-      timeval t2; \
-      gettimeofday(&t2, NULL); \
-      fprintf(stdout, "Time passed: %ldus\n", usecs_passed(t1, t2)); \
+      timeval t2;
+      gettimeofday(&t2, NULL);
+      fprintf(stdout, "Time passed: %ldus\n", usecs_passed(t1, t2));
     }
 
     WriteASTCFile(compressed, output);

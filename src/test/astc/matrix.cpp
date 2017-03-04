@@ -3,12 +3,11 @@
 #include "astc/matrix.hpp"
 #include "astc/vector.hpp"
 
-TEST_CASE("eigen_vector", "[matrix]")
-{
+TEST_CASE("eigen_vector", "[matrix]") {
   float eps = 0.06f;
 
   {
-    const mat3x3f_t I(1,0,0, 0,1,0, 0,0,1);
+    const mat3x3f_t I(1, 0, 0, 0, 1, 0, 0, 0, 1);
     vec3f_t v(5, 6, 7);
     vec3f_t u = I * v;
     REQUIRE(u.x == Approx(v.x));
@@ -17,7 +16,7 @@ TEST_CASE("eigen_vector", "[matrix]")
   }
 
   {
-    mat3x3f_t m(2,0,1, 0,2,0, 1,0,2);
+    mat3x3f_t m(2, 0, 1, 0, 2, 0, 1, 0, 2);
     vec3f_t eig;
     eigen_vector(m, eig);
     REQUIRE(eig.x == Approx(0.70711f).epsilon(eps));
@@ -26,7 +25,7 @@ TEST_CASE("eigen_vector", "[matrix]")
   }
 
   {
-    mat3x3f_t m(1,0,0, 0,2,0, 0,0,3);
+    mat3x3f_t m(1, 0, 0, 0, 2, 0, 0, 0, 3);
     vec3f_t eig;
     eigen_vector(m, eig);
     REQUIRE(eig.x == Approx(0).epsilon(eps));
@@ -35,7 +34,7 @@ TEST_CASE("eigen_vector", "[matrix]")
   }
 
   {
-    mat3x3f_t m(10,14,5, 6,8,15, 5,5,10);
+    mat3x3f_t m(10, 14, 5, 6, 8, 15, 5, 5, 10);
     vec3f_t eig;
     eigen_vector(m, eig);
     REQUIRE(eig.x == Approx(0.68322f));

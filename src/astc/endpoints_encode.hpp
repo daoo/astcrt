@@ -7,31 +7,28 @@
 
 #include <stdint.h>
 
-int color_channel_sum(vec3i_t color)
-{
+int color_channel_sum(vec3i_t color) {
   return color.r + color.g + color.b;
 }
 
-void encode_luminance_direct(
-    range_t endpoint_quant,
-    int v0,
-    int v1,
-    uint8_t endpoint_unquantized[2],
-    uint8_t endpoint_quantized[2])
-{
+void encode_luminance_direct(range_t endpoint_quant,
+                             int v0,
+                             int v1,
+                             uint8_t endpoint_unquantized[2],
+                             uint8_t endpoint_quantized[2]) {
   endpoint_quantized[0] = quantize_color(endpoint_quant, v0);
   endpoint_quantized[1] = quantize_color(endpoint_quant, v1);
-  endpoint_unquantized[0] = unquantize_color(endpoint_quant, endpoint_quantized[0]);
-  endpoint_unquantized[1] = unquantize_color(endpoint_quant, endpoint_quantized[1]);
+  endpoint_unquantized[0] =
+      unquantize_color(endpoint_quant, endpoint_quantized[0]);
+  endpoint_unquantized[1] =
+      unquantize_color(endpoint_quant, endpoint_quantized[1]);
 }
 
-void encode_rgb_direct(
-    range_t endpoint_quant,
-    vec3i_t e0,
-    vec3i_t e1,
-    uint8_t endpoint_quantized[6],
-    vec3i_t endpoint_unquantized[2])
-{
+void encode_rgb_direct(range_t endpoint_quant,
+                       vec3i_t e0,
+                       vec3i_t e1,
+                       uint8_t endpoint_quantized[6],
+                       vec3i_t endpoint_unquantized[2]) {
   vec3i_t e0q = quantize_color(endpoint_quant, e0);
   vec3i_t e1q = quantize_color(endpoint_quant, e1);
   vec3i_t e0u = unquantize_color(endpoint_quant, e0q);
