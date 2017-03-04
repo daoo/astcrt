@@ -30,7 +30,7 @@ manipulation program.
 Decoding
 --------
 
-The reference implementation by ARM[3] can be used for testing the decoder.
+The reference implementation by ARM[3] can be used for decoding.
 
 Run it with the following commands:
 
