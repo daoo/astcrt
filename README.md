@@ -8,12 +8,11 @@ which compress input images into ASTC[2] files.
 Building
 --------
 
-To build run `make debug-linux`.
+To build run `./build/configure && ninja -C out_clang_debug`.
 
 Dependencies:
 
   * Bash
-  * GNU Make
   * Ninja
   * Clang (for debug builds)
   * GCC (for release builds)

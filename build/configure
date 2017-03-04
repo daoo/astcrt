@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+
+set -eu
+
+out="$(realpath out)"
+src="$(realpath src)"
+build="$(realpath build)"
+
+function configure() {
+  path="${out}_${1}"
+  echo "${path}/build.ninja"
+  mkdir -p "${path}"
+  cat - "${build}/build.ninja.template" <<DOC > "${path}/build.ninja"
+src = ${src}
+outdir = ${path}
+ar = ${2}
+cxx = ${3}
+cxxflags = ${4}
+ldflags = ${5}
+DOC
+}
+
+configure "clang_debug" \
+  "ar" \
+  "clang++" \
+  "-Wall -Wextra -Wconversion -Wshadow -g -Xclang -fcolor-diagnostics" \
+  ""
+
+configure "clang_release" \
+  "ar" \
+  "clang++" \
+  "-Ofast -march=native -DNDEBUG" \
+  ""
+
+configure "clang_sanitize" \
+  "ar" \
+  "clang++" \
+  "-Wall -g -fsanitize=address,undefined" \
+  "-fsanitize=address,undefined"
+
+configure "gcc_debug" \
+  "ar" \
+  "g++" \
+  "-Wall -Wextra -Weffc++ -Wno-padded -g -fdiagnostics-color=always" \
+  ""
+
+configure "gcc_release" \
+  "ar" \
+  "g++" \
+  "-Ofast -march=native -flto -DNDEBUG" \
+  "-flto"
+
+configure "arm_release" \
+  "arm-linux-androidabi-ar" \
+  "arm-linux-androidabi-g++" \
+  "-Wall -DNDEBUG -O3 -march=armv7-a -mfpu=neon -mfloat-abi=softfp" \
+  ""
+
+configure "iwyu" \
+  "ar" \
+  "include-what-you-use" \
+  "" \
+  ""

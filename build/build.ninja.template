@@ -5,7 +5,7 @@ rule cxx
   command = $cxx -MMD -MF $out.d -I$src -std=c++11 $cxxflags -c $in -o $out
 
 rule ar
-  command = ar rcs $out $in
+  command = $ar rcs $out $in
   description = AR $out
 
 rule link
@@ -37,8 +37,14 @@ build $outdir/libimage.a: ar $
   $outdir/image/bgra.o $
   $outdir/image/compressed.o
 
-build $outdir/astcrt: link $outdir/compress/astc.o | $outdir/libimage.a $outdir/libastc.a
+build $outdir/astcrt: link $
+  $outdir/compress/astc.o | $outdir/libimage.a $outdir/libastc.a
   libs = -lastc -limage
 
-build $outdir/astcrt-tests: link $outdir/test/main.o $outdir/test/astc/bise.o $outdir/test/astc/bitmanip.o $outdir/test/astc/matrix.o $outdir/test/astc/pca.o | $outdir/libimage.a $outdir/libastc.a
+build $outdir/astcrt-tests: link $
+  $outdir/test/main.o $
+  $outdir/test/astc/bise.o $
+  $outdir/test/astc/bitmanip.o $
+  $outdir/test/astc/matrix.o $
+  $outdir/test/astc/pca.o | $outdir/libimage.a $outdir/libastc.a
   libs = -lastc -limage
