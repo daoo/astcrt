@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -eu
+
+CXX="clang++" CXXFLAGS="-Wall -Wextra -Wconversion -Wshadow -g -Xclang -fcolor-diagnostics" \
+  meson "out_clang_debug"
+
+CXX="clang++" CXXFLAGS="-Ofast -march=native -DNDEBUG" \
+  meson "out_clang_release"
+
+CXX="clang++" CXXFLAGS="-Wall -g -fsanitize=address,undefined" \
+  meson "out_clang_sanitize"
+
+CXX="g++" CXXFLAGS="-Wall -Wextra -Weffc++ -Wno-padded -g -fdiagnostics-color=always" \
+  meson "out_gcc_debug"
+
+CXX="g++" CXXFLAGS="-Ofast -march=native -flto -DNDEBUG" \
+  meson "out_gcc_release"
