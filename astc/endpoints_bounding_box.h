@@ -1,7 +1,6 @@
 #ifndef ASTC_ENDPOINTS_BOUNDING_BOX_H_
 #define ASTC_ENDPOINTS_BOUNDING_BOX_H_
 
-#include <algorithm>
 #include <cstddef>
 
 #include "astc/colors.h"
@@ -17,8 +16,8 @@ void bounding_box(const unorm8_t* texels,
   vec3i_t b(0, 0, 0);
   for (size_t i = 0; i < count; ++i) {
     vec3i_t t = to_vec3i(texels[i]);
-    a = std::min(a, t);
-    b = std::max(b, t);
+    a = vecmin(a, t);
+    b = vecmax(b, t);
   }
   e0 = a;
   e1 = b;

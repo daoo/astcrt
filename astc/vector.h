@@ -121,16 +121,16 @@ vec3_t<T> signorm(vec3_t<T> a) {
 }
 
 template <typename T>
-vec3_t<T> min(vec3_t<T> a, vec3_t<T> b) {
+vec3_t<T> vecmin(vec3_t<T> a, vec3_t<T> b) {
   vec3_t<T> result;
-  result.x = min(a.x, b.x);
-  result.y = min(a.y, b.y);
-  result.z = min(a.z, b.z);
+  result.x = std::min(a.x, b.x);
+  result.y = std::min(a.y, b.y);
+  result.z = std::min(a.z, b.z);
   return result;
 }
 
 template <typename T>
-vec3_t<T> max(vec3_t<T> a, vec3_t<T> b) {
+vec3_t<T> vecmax(vec3_t<T> a, vec3_t<T> b) {
   vec3_t<T> result;
   result.x = std::max(a.x, b.x);
   result.y = std::max(a.y, b.y);
