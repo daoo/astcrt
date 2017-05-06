@@ -1,16 +1,7 @@
-#ifndef MATH_H_S3TMCKJW
-#define MATH_H_S3TMCKJW
+#ifndef ASTC_MISC_H_
+#define ASTC_MISC_H_
 
 #include <math.h>
-
-template <typename T>
-T min(T a, T b) {
-  return a <= b ? a : b;
-}
-template <typename T>
-T max(T a, T b) {
-  return a >= b ? a : b;
-}
 
 template <typename T>
 T clamp(T a, T b, T x) {
@@ -29,4 +20,4 @@ inline bool approx_equal(float x, float y, float epsilon) {
   return fabs(x - y) < epsilon;
 }
 
-#endif /* end of include guard: MATH_H_S3TMCKJW */
+#endif  // ASTC_MISC_H_

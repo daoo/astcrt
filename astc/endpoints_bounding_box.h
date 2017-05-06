@@ -1,7 +1,8 @@
-#ifndef ENDPOINTS_BOUNDING_BOX_HPP_JI1ZQLPD
-#define ENDPOINTS_BOUNDING_BOX_HPP_JI1ZQLPD
+#ifndef ASTC_ENDPOINTS_BOUNDING_BOX_H_
+#define ASTC_ENDPOINTS_BOUNDING_BOX_H_
 
-#include <stddef.h>
+#include <algorithm>
+#include <cstddef>
 
 #include "astc/colors.h"
 #include "astc/constants.h"
@@ -16,8 +17,8 @@ void bounding_box(const unorm8_t* texels,
   vec3i_t b(0, 0, 0);
   for (size_t i = 0; i < count; ++i) {
     vec3i_t t = to_vec3i(texels[i]);
-    a = min(a, t);
-    b = max(b, t);
+    a = std::min(a, t);
+    b = std::max(b, t);
   }
   e0 = a;
   e1 = b;
@@ -29,4 +30,4 @@ void bounding_box_block(const unorm8_t texels[BLOCK_TEXEL_COUNT],
   bounding_box(texels, BLOCK_TEXEL_COUNT, e0, e1);
 }
 
-#endif /* end of include guard: ENDPOINTS_BOUNDING_BOX_HPP_JI1ZQLPD */
+#endif  // ASTC_ENDPOINTS_BOUNDING_BOX_H_

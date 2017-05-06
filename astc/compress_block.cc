@@ -1,8 +1,10 @@
-#include <stddef.h>
-#include <stdint.h>
+#include "astc/compress_block.h"
+
+#include <algorithm>
+#include <cstddef>
+#include <cstdint>
 
 #include "astc/colors.h"
-#include "astc/compress_block.h"
 #include "astc/constants.h"
 #include "astc/data_size.h"
 #include "astc/endpoints.h"
@@ -36,37 +38,30 @@ void encode_luminance(const uint8_t texels[BLOCK_TEXEL_COUNT],
   uint8_t l0 = 255;
   uint8_t l1 = 0;
   for (size_t i = 0; i < BLOCK_TEXEL_COUNT; ++i) {
-    l0 = min(l0, texels[i]);
-    l1 = max(l1, texels[i]);
+    l0 = std::min(l0, texels[i]);
+    l1 = std::max(l1, texels[i]);
   }
 
   uint8_t endpoint_unquantized[2];
   uint8_t endpoint_quantized[2];
-  encode_luminance_direct(
-      endpoint_quant, l0, l1, endpoint_quantized, endpoint_unquantized);
+  encode_luminance_direct(endpoint_quant, l0, l1, endpoint_quantized,
+                          endpoint_unquantized);
 
   uint8_t weights_quantized[BLOCK_TEXEL_COUNT];
-  calculate_quantized_weights_luminance(texels,
-                                        weight_quant,
-                                        endpoint_unquantized[0],
-                                        endpoint_unquantized[1],
-                                        weights_quantized);
+  calculate_quantized_weights_luminance(
+      texels, weight_quant, endpoint_unquantized[0], endpoint_unquantized[1],
+      weights_quantized);
 
   uint8_t endpoint_ise[MAXIMUM_ENCODED_COLOR_ENDPOINT_BYTES] = {0};
   integer_sequence_encode(endpoint_quantized, 2, RANGE_256, endpoint_ise);
 
   uint8_t weights_ise[MAXIMUM_ENCODED_WEIGHT_BYTES + 1] = {0};
-  integer_sequence_encode(
-      weights_quantized, BLOCK_TEXEL_COUNT, RANGE_32, weights_ise);
+  integer_sequence_encode(weights_quantized, BLOCK_TEXEL_COUNT, RANGE_32,
+                          weights_ise);
 
-  symbolic_to_physical(color_endpoint_mode,
-                       endpoint_quant,
-                       weight_quant,
-                       partition_count,
-                       partition_index,
-                       endpoint_ise,
-                       weights_ise,
-                       physical_block);
+  symbolic_to_physical(color_endpoint_mode, endpoint_quant, weight_quant,
+                       partition_count, partition_index, endpoint_ise,
+                       weights_ise, physical_block);
 }
 
 void encode_rgb_single_partition(const unorm8_t texels[BLOCK_TEXEL_COUNT],
@@ -83,39 +78,28 @@ void encode_rgb_single_partition(const unorm8_t texels[BLOCK_TEXEL_COUNT],
 
   vec3i_t endpoint_unquantized[2];
   uint8_t endpoint_quantized[6];
-  encode_rgb_direct(endpoint_quant,
-                    round(e0),
-                    round(e1),
-                    endpoint_quantized,
+  encode_rgb_direct(endpoint_quant, round(e0), round(e1), endpoint_quantized,
                     endpoint_unquantized);
 
   uint8_t weights_quantized[BLOCK_TEXEL_COUNT];
-  calculate_quantized_weights_rgb(texels,
-                                  weight_quant,
-                                  endpoint_unquantized[0],
-                                  endpoint_unquantized[1],
-                                  weights_quantized);
+  calculate_quantized_weights_rgb(texels, weight_quant, endpoint_unquantized[0],
+                                  endpoint_unquantized[1], weights_quantized);
 
   uint8_t endpoint_ise[MAXIMUM_ENCODED_COLOR_ENDPOINT_BYTES] = {0};
   integer_sequence_encode(endpoint_quantized, 6, endpoint_quant, endpoint_ise);
 
   uint8_t weights_ise[MAXIMUM_ENCODED_WEIGHT_BYTES + 1] = {0};
-  integer_sequence_encode(
-      weights_quantized, BLOCK_TEXEL_COUNT, weight_quant, weights_ise);
+  integer_sequence_encode(weights_quantized, BLOCK_TEXEL_COUNT, weight_quant,
+                          weights_ise);
 
-  symbolic_to_physical(color_endpoint_mode,
-                       endpoint_quant,
-                       weight_quant,
-                       partition_count,
-                       partition_index,
-                       endpoint_ise,
-                       weights_ise,
-                       physical_block);
+  symbolic_to_physical(color_endpoint_mode, endpoint_quant, weight_quant,
+                       partition_count, partition_index, endpoint_ise,
+                       weights_ise, physical_block);
 }
 
 bool is_solid(const unorm8_t texels[BLOCK_TEXEL_COUNT],
               size_t count,
-              unorm8_t& color) {
+              unorm8_t* color) {
   for (size_t i = 0; i < count; ++i) {
     if (!approx_equal(to_vec3i(texels[i]), to_vec3i(texels[0]))) {
       return false;
@@ -123,7 +107,7 @@ bool is_solid(const unorm8_t texels[BLOCK_TEXEL_COUNT],
   }
 
   // TODO: Calculate average color?
-  color = texels[0];
+  *color = texels[0];
   return true;
 }
 
@@ -146,7 +130,7 @@ void compress_block(const unorm8_t texels[BLOCK_TEXEL_COUNT],
                     PhysicalBlock* physical_block) {
   {
     unorm8_t color;
-    if (is_solid(texels, BLOCK_TEXEL_COUNT, color)) {
+    if (is_solid(texels, BLOCK_TEXEL_COUNT, &color)) {
       encode_void_extent(to_vec3i(color), physical_block);
       /* encode_void_extent(vec3i_t(0, 0, 0), physical_block); */
       return;

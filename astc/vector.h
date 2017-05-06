@@ -1,7 +1,8 @@
-#ifndef VECTOR_H_XKUIVULE
-#define VECTOR_H_XKUIVULE
+#ifndef ASTC_VECTOR_H_
+#define ASTC_VECTOR_H_
 
-#include <math.h>
+#include <algorithm>
+#include <cmath>
 
 #include "astc/dcheck.h"
 
@@ -131,9 +132,9 @@ vec3_t<T> min(vec3_t<T> a, vec3_t<T> b) {
 template <typename T>
 vec3_t<T> max(vec3_t<T> a, vec3_t<T> b) {
   vec3_t<T> result;
-  result.x = max(a.x, b.x);
-  result.y = max(a.y, b.y);
-  result.z = max(a.z, b.z);
+  result.x = std::max(a.x, b.x);
+  result.y = std::max(a.y, b.y);
+  result.z = std::max(a.z, b.z);
   return result;
 }
 
@@ -144,4 +145,4 @@ T qd_to_line(vec3_t<T> m, vec3_t<T> k, T kk, vec3_t<T> p) {
   return qd(p, q);
 }
 
-#endif /* end of include guard: VECTOR_H_XKUIVULE */
+#endif  // ASTC_VECTOR_H_

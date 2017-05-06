@@ -1,9 +1,9 @@
+#include <cstddef>
+#include <cstdint>
+
 #include "test/catch.h"
 
 #include "astc/bitmanip.h"
-
-#include <stddef.h>
-#include <stdint.h>
 
 TEST_CASE("getbit", "[bitmanip]") {
   {
@@ -167,8 +167,8 @@ TEST_CASE("reverse_bytes", "[bitmanip]") {
   {
     uint32_t a = 0xF0F0F0F0;
     uint32_t b = 0;
-    reverse_bytes(
-        reinterpret_cast<uint8_t*>(&a), 4, reinterpret_cast<uint8_t*>(&b) + 3);
+    reverse_bytes(reinterpret_cast<uint8_t*>(&a), 4,
+                  reinterpret_cast<uint8_t*>(&b) + 3);
 
     REQUIRE(b == 0x0F0F0F0F);
   }
@@ -176,8 +176,8 @@ TEST_CASE("reverse_bytes", "[bitmanip]") {
   {
     uint32_t a = 0x0000000F;
     uint32_t b = 0;
-    reverse_bytes(
-        reinterpret_cast<uint8_t*>(&a), 1, reinterpret_cast<uint8_t*>(&b) + 3);
+    reverse_bytes(reinterpret_cast<uint8_t*>(&a), 1,
+                  reinterpret_cast<uint8_t*>(&b) + 3);
 
     REQUIRE(b == 0xF0000000);
   }
@@ -185,8 +185,8 @@ TEST_CASE("reverse_bytes", "[bitmanip]") {
   {
     uint32_t a = 0x000ED76D;
     uint32_t b = 0;
-    reverse_bytes(
-        reinterpret_cast<uint8_t*>(&a), 3, reinterpret_cast<uint8_t*>(&b) + 3);
+    reverse_bytes(reinterpret_cast<uint8_t*>(&a), 3,
+                  reinterpret_cast<uint8_t*>(&b) + 3);
 
     REQUIRE(b == 0xB6EB7000);
   }
@@ -195,8 +195,8 @@ TEST_CASE("reverse_bytes", "[bitmanip]") {
     // Check that existing bytes are not overwritten.
     uint32_t a = 0x000FFFFF;
     uint32_t b = 0x00000FFF;
-    reverse_bytes(
-        reinterpret_cast<uint8_t*>(&a), 3, reinterpret_cast<uint8_t*>(&b) + 3);
+    reverse_bytes(reinterpret_cast<uint8_t*>(&a), 3,
+                  reinterpret_cast<uint8_t*>(&b) + 3);
     REQUIRE(b == 0xFFFFFFFF);
   }
 }

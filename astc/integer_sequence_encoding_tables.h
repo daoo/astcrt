@@ -1,7 +1,7 @@
-#ifndef TABLES_H_EHWHBUI2
-#define TABLES_H_EHWHBUI2
+#ifndef ASTC_INTEGER_SEQUENCE_ENCODING_TABLES_H_
+#define ASTC_INTEGER_SEQUENCE_ENCODING_TABLES_H_
 
-#include <stdint.h>
+#include <cstdint>
 
 const uint8_t integer_from_trits[3][3][3][3][3] = {
     {{{{0, 1, 2}, {4, 5, 6}, {8, 9, 10}},
@@ -58,4 +58,4 @@ const uint8_t integer_from_quints[5][5][5] = {{{0, 1, 2, 3, 4},
                                                {126, 127, 94, 95, 62},
                                                {39, 47, 55, 63, 31}}};
 
-#endif /* end of include guard: TABLES_H_EHWHBUI2 */
+#endif  // ASTC_INTEGER_SEQUENCE_ENCODING_TABLES_H_

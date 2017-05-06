@@ -1,9 +1,9 @@
-#ifndef MATRIX_H_O8UTJ2NL
-#define MATRIX_H_O8UTJ2NL
+#ifndef ASTC_MATRIX_H_
+#define ASTC_MATRIX_H_
+
+#include <cstddef>
 
 #include "astc/vector.h"
-
-#include <stddef.h>
 
 struct mat3x3f_t {
  public:
@@ -42,4 +42,4 @@ inline vec3f_t operator*(const mat3x3f_t& a, vec3f_t b) {
 
 void eigen_vector(const mat3x3f_t& a, vec3f_t& eig);
 
-#endif /* end of include guard: MATRIX_H_O8UTJ2NL */
+#endif  // ASTC_MATRIX_H_

@@ -1,5 +1,5 @@
-#ifndef ENDPOINTS_H_IHUIOWTJ
-#define ENDPOINTS_H_IHUIOWTJ
+#ifndef ASTC_ENDPOINTS_H_
+#define ASTC_ENDPOINTS_H_
 
 enum color_endpoint_mode_t {
   CEM_LDR_LUMINANCE_DIRECT = 0,
@@ -21,4 +21,4 @@ enum color_endpoint_mode_t {
   CEM_MAX = 16
 };
 
-#endif /* end of include guard: ENDPOINTS_H_IHUIOWTJ */
+#endif  // ASTC_ENDPOINTS_H_

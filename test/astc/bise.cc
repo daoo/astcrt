@@ -1,9 +1,9 @@
+#include <cstdint>
+
 #include "test/catch.h"
 
 #include "astc/integer_sequence_encoding.h"
 #include "astc/range.h"
-
-#include <stdint.h>
 
 TEST_CASE("integer_sequence_encode", "[bise]") {
   uint8_t numbers[5] = {1, 5, 4, 8, 9};

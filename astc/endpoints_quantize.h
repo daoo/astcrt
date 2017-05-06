@@ -1,7 +1,7 @@
-#ifndef COLOR_QUANTIZATION_H_4MSDGEZD
-#define COLOR_QUANTIZATION_H_4MSDGEZD
+#ifndef ASTC_ENDPOINTS_QUANTIZE_H_
+#define ASTC_ENDPOINTS_QUANTIZE_H_
 
-#include <stdint.h>
+#include <cstdint>
 
 #include "astc/dcheck.h"
 #include "astc/endpoint_quantize_tables.h"
@@ -34,4 +34,4 @@ vec3i_t unquantize_color(range_t quant, vec3i_t c) {
   return result;
 }
 
-#endif /* end of include guard: COLOR_QUANTIZATION_H_4MSDGEZD */
+#endif  // ASTC_ENDPOINTS_QUANTIZE_H_

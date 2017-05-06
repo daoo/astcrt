@@ -1,8 +1,8 @@
-#ifndef DATA_SIZE_H_LF5Z8OQB
-#define DATA_SIZE_H_LF5Z8OQB
+#ifndef ASTC_DATA_SIZE_H_
+#define ASTC_DATA_SIZE_H_
 
-#include <stddef.h>
-#include <stdint.h>
+#include <cstddef>
+#include <cstdint>
 
 #include "astc/data_size_table.h"
 #include "astc/dcheck.h"
@@ -18,4 +18,4 @@ range_t endpoint_quantization(size_t partitions,
   return static_cast<range_t>(ce_range);
 }
 
-#endif /* end of include guard: DATA_SIZE_H_LF5Z8OQB */
+#endif  // ASTC_DATA_SIZE_H_

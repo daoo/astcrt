@@ -1,7 +1,7 @@
-#ifndef BGRA_HPP_CS4MDDVX
-#define BGRA_HPP_CS4MDDVX
+#ifndef IMAGE_BGRA_H_
+#define IMAGE_BGRA_H_
 
-#include <stddef.h>
+#include <cstddef>
 
 #include "image/color.h"
 
@@ -37,4 +37,4 @@ class BgraImage {
 void WriteTGAFile(const BgraImage& image, const char* file_path);
 BgraImage ReadTGAFile(const char* file_path);
 
-#endif /* end of include guard: BGRA_HPP_CS4MDDVX */
+#endif  // IMAGE_BGRA_H_

@@ -1,11 +1,11 @@
-#ifndef COLORS_H_BGWU6DC8
-#define COLORS_H_BGWU6DC8
+#ifndef ASTC_COLORS_H_
+#define ASTC_COLORS_H_
+
+#include <math.h>
+#include <cstdint>
 
 #include "astc/misc.h"
 #include "astc/vector.h"
-
-#include <math.h>
-#include <stdint.h>
 
 const int APPROX_COLOR_EPSILON = 50;
 
@@ -129,4 +129,4 @@ inline unorm16_t unorm8_to_unorm16(unorm8_t c8) {
   return result;
 }
 
-#endif /* end of include guard: COLORS_H_BGWU6DC8 */
+#endif  // ASTC_COLORS_H_

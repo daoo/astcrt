@@ -1,11 +1,11 @@
-#ifndef ENDPOINTS_ENCODE_H_AYO86OBW
-#define ENDPOINTS_ENCODE_H_AYO86OBW
+#ifndef ASTC_ENDPOINTS_ENCODE_H_
+#define ASTC_ENDPOINTS_ENCODE_H_
+
+#include <cstdint>
 
 #include "astc/endpoints_quantize.h"
 #include "astc/range.h"
 #include "astc/vector.h"
-
-#include <stdint.h>
 
 int color_channel_sum(vec3i_t color) {
   return color.r + color.g + color.b;
@@ -60,4 +60,4 @@ void encode_rgb_direct(range_t endpoint_quant,
   }
 }
 
-#endif /* end of include guard: ENDPOINTS_ENCODE_H_AYO86OBW */
+#endif  // ASTC_ENDPOINTS_ENCODE_H_

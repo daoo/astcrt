@@ -1,8 +1,9 @@
 #include "image/astc.h"
-#include "image/compressed.h"
 
-#include <stdint.h>
-#include <stdio.h>
+#include <cstdint>
+#include <cstdio>
+
+#include "image/compressed.h"
 
 static int MAGIC_FILE_CONSTANT = 0x5CA1AB13;
 

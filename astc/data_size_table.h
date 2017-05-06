@@ -1,7 +1,7 @@
-#ifndef DATA_SIZE_TABLE_HPP_JQN9PH6T
-#define DATA_SIZE_TABLE_HPP_JQN9PH6T
+#ifndef ASTC_DATA_SIZE_TABLE_H_
+#define ASTC_DATA_SIZE_TABLE_H_
 
-#include <stdint.h>
+#include <cstdint>
 
 const int8_t color_endpoint_range_table[2][12][16] = {
     {{-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
@@ -30,4 +30,4 @@ const int8_t color_endpoint_range_table[2][12][16] = {
      {10, 10, 10, 10, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0}},
 };
 
-#endif /* end of include guard: DATA_SIZE_TABLE_HPP_JQN9PH6T */
+#endif  // ASTC_DATA_SIZE_TABLE_H_

@@ -1,13 +1,13 @@
-#ifndef INTEGER_SEQUENCE_ENCODING_H_XBQZHGDT
-#define INTEGER_SEQUENCE_ENCODING_H_XBQZHGDT
+#ifndef ASTC_INTEGER_SEQUENCE_ENCODING_H_
+#define ASTC_INTEGER_SEQUENCE_ENCODING_H_
+
+#include <cstddef>
+#include <cstdint>
 
 #include "astc/bitmanip.h"
 #include "astc/dcheck.h"
 #include "astc/integer_sequence_encoding_tables.h"
 #include "astc/range.h"
-
-#include <stddef.h>
-#include <stdint.h>
 
 /**
  * Table that describes the number of trits or quints along with bits required
@@ -209,4 +209,4 @@ inline size_t compute_ise_bitcount(size_t items, range_t range) {
   return items * bits;
 }
 
-#endif /* end of include guard: INTEGER_SEQUENCE_ENCODING_H_XBQZHGDT */
+#endif  // ASTC_INTEGER_SEQUENCE_ENCODING_H_

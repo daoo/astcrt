@@ -1,4 +1,4 @@
-#include <stddef.h>
+#include <cstddef>
 
 #include "astc/colors.h"
 #include "astc/constants.h"

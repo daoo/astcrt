@@ -1,7 +1,7 @@
-#ifndef ENDPOINTS_PRINCIPAL_COMPONENTS_HPP_XTRHPOBI
-#define ENDPOINTS_PRINCIPAL_COMPONENTS_HPP_XTRHPOBI
+#ifndef ASTC_ENDPOINTS_PRINCIPAL_COMPONENTS_H_
+#define ASTC_ENDPOINTS_PRINCIPAL_COMPONENTS_H_
 
-#include <stddef.h>
+#include <cstddef>
 
 #include "astc/colors.h"
 #include "astc/constants.h"
@@ -19,4 +19,4 @@ inline void principal_component_analysis_block(
   principal_component_analysis(texels, BLOCK_TEXEL_COUNT, line_k, line_m);
 }
 
-#endif /* end of include guard: ENDPOINTS_PRINCIPAL_COMPONENTS_HPP_XTRHPOBI */
+#endif  // ASTC_ENDPOINTS_PRINCIPAL_COMPONENTS_H_

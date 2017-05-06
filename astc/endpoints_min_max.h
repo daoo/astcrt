@@ -1,7 +1,8 @@
-#ifndef ENDPOINTS_MIN_MAX_HPP_MIWZE3MV
-#define ENDPOINTS_MIN_MAX_HPP_MIWZE3MV
+#ifndef ASTC_ENDPOINTS_MIN_MAX_H_
+#define ASTC_ENDPOINTS_MIN_MAX_H_
 
-#include <stddef.h>
+#include <algorithm>
+#include <cstddef>
 
 #include "astc/colors.h"
 #include "astc/constants.h"
@@ -27,8 +28,8 @@ void find_min_max(const unorm8_t texels[BLOCK_TEXEL_COUNT],
 
   for (size_t i = 1; i < count; ++i) {
     float t = dot(to_vec3f(texels[i]) - line_m, line_k);
-    a = min(a, t);
-    b = max(b, t);
+    a = std::min(a, t);
+    b = std::max(b, t);
   }
 
   e0 = clamp_rgb(line_k * a + line_m);
@@ -43,4 +44,4 @@ void find_min_max_block(const unorm8_t texels[BLOCK_TEXEL_COUNT],
   find_min_max(texels, BLOCK_TEXEL_COUNT, line_k, line_m, e0, e1);
 }
 
-#endif /* end of include guard: ENDPOINTS_MIN_MAX_HPP_MIWZE3MV */
+#endif  // ASTC_ENDPOINTS_MIN_MAX_H_

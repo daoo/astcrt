@@ -1,7 +1,7 @@
 #include "image/bgra.h"
 
-#include <stdint.h>
-#include <stdio.h>
+#include <cstdint>
+#include <cstdio>
 
 struct TGAHeader {
   uint8_t id_length;

@@ -1,8 +1,8 @@
-#ifndef ASTC_H_I2J6YYXE
-#define ASTC_H_I2J6YYXE
+#ifndef IMAGE_ASTC_H_
+#define IMAGE_ASTC_H_
 
 class CompressedImage;
 
 void WriteASTCFile(const CompressedImage&, const char* file_path);
 
-#endif /* end of include guard: ASTC_H_I2J6YYXE */
+#endif  // IMAGE_ASTC_H_

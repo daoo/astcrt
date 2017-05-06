@@ -1,7 +1,7 @@
-#ifndef DCHECK_H_J3UADVG0
-#define DCHECK_H_J3UADVG0
+#ifndef ASTC_DCHECK_H_
+#define ASTC_DCHECK_H_
 
-#include <assert.h>
+#include <cassert>
 #define DCHECK(x) assert(x)
 
-#endif /* end of include guard: DCHECK_H_J3UADVG0 */
+#endif  // ASTC_DCHECK_H_

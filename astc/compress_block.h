@@ -1,5 +1,5 @@
-#ifndef COMPRESS_BLOCK_H_ATUDCKX5
-#define COMPRESS_BLOCK_H_ATUDCKX5
+#ifndef ASTC_COMPRESS_BLOCK_H_
+#define ASTC_COMPRESS_BLOCK_H_
 
 #include "astc/constants.h"
 
@@ -9,4 +9,4 @@ struct PhysicalBlock;
 void compress_block(const unorm8_t texels[BLOCK_TEXEL_COUNT],
                     PhysicalBlock* physical_block);
 
-#endif /* end of include guard: COMPRESS_BLOCK_H_ATUDCKX5 */
+#endif  // ASTC_COMPRESS_BLOCK_H_

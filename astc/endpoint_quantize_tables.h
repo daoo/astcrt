@@ -1,7 +1,7 @@
-#ifndef ENDPOINT_QUANTIZE_TABLES_HPP_NIZQX3RW
-#define ENDPOINT_QUANTIZE_TABLES_HPP_NIZQX3RW
+#ifndef ASTC_ENDPOINT_QUANTIZE_TABLES_H_
+#define ASTC_ENDPOINT_QUANTIZE_TABLES_H_
 
-#include <stdint.h>
+#include <cstdint>
 
 // FIXME: This is copied from ARM-code
 const uint8_t color_unquantize_table[21][256] = {
@@ -388,4 +388,4 @@ const uint8_t color_quantize_table[21][256] = {
      240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254,
      255}};
 
-#endif /* end of include guard: ENDPOINT_QUANTIZE_TABLES_HPP_NIZQX3RW */
+#endif  // ASTC_ENDPOINT_QUANTIZE_TABLES_H_

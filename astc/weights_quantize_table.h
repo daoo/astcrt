@@ -1,7 +1,7 @@
-#ifndef WEIGHTS_QUANTIZE_TABLE_HPP_P75SUPUC
-#define WEIGHTS_QUANTIZE_TABLE_HPP_P75SUPUC
+#ifndef ASTC_WEIGHTS_QUANTIZE_TABLE_H_
+#define ASTC_WEIGHTS_QUANTIZE_TABLE_H_
 
-#include <stdint.h>
+#include <cstdint>
 
 // FIXME: This is copied from ARM-code
 const uint8_t weight_quantize_table[12][1025] = {
@@ -563,4 +563,4 @@ const uint8_t weight_quantize_table[12][1025] = {
      30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30,
      30, 30, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31}};
 
-#endif /* end of include guard: WEIGHTS_QUANTIZE_TABLE_HPP_P75SUPUC */
+#endif  // ASTC_WEIGHTS_QUANTIZE_TABLE_H_

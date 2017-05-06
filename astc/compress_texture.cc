@@ -1,4 +1,4 @@
-#include <stddef.h>
+#include <cstddef>
 
 #include "astc/colors.h"
 #include "astc/compress_block.h"
@@ -7,7 +7,6 @@
 #include "astc/store_block.h"
 
 namespace {
-
 void fetch_image_block(const unorm8_t* source,
                        size_t image_width,
                        size_t xpos,
@@ -42,7 +41,7 @@ void fetch_image_block(const unorm8_t* source,
 }
 
 PhysicalBlock physical_block_zero = {0};
-}
+}  // namespace
 
 void compress_texture(const uint8_t* src,
                       uint8_t* dst,

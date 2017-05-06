@@ -1,7 +1,7 @@
-#include "compressed.h"
+#include "image/compressed.h"
 
-#include <stdint.h>
-#include <stdio.h>
+#include <cstdint>
+#include <cstdio>
 
 struct CompressedHeader {
   uint8_t magic[4];
@@ -60,8 +60,8 @@ CompressedImage ReadCompressedFile(uint32_t magic, const char* file_path) {
   size_t xsize = (hdr.xsize[2] << 16) | (hdr.xsize[1] << 8) | hdr.xsize[0];
   size_t ysize = (hdr.ysize[2] << 16) | (hdr.ysize[1] << 8) | hdr.ysize[0];
 
-  CompressedImage compressed(
-      xsize, ysize, hdr.xdim, hdr.ydim, hdr.bytes_per_block);
+  CompressedImage compressed(xsize, ysize, hdr.xdim, hdr.ydim,
+                             hdr.bytes_per_block);
   fread(compressed.buffer, 1, compressed.buffer_size, file);
   fclose(file);
 

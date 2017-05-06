@@ -1,7 +1,7 @@
-#ifndef COLOR_HPP_UJKJ5MOZ
-#define COLOR_HPP_UJKJ5MOZ
+#ifndef IMAGE_COLOR_H_
+#define IMAGE_COLOR_H_
 
-#include <stdint.h>
+#include <cstdint>
 
 union rgba8_t {
   struct type {
@@ -34,4 +34,4 @@ inline rgba8_t swap_red_blue(bgra8_t color) {
   return output;
 }
 
-#endif /* end of include guard: COLOR_HPP_UJKJ5MOZ */
+#endif  // IMAGE_COLOR_H_

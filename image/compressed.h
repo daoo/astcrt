@@ -1,9 +1,9 @@
-#ifndef COMPRESSED_H_UEQIDML9
-#define COMPRESSED_H_UEQIDML9
+#ifndef IMAGE_COMPRESSED_H_
+#define IMAGE_COMPRESSED_H_
 
-#include <assert.h>
-#include <stddef.h>
-#include <stdint.h>
+#include <cassert>
+#include <cstddef>
+#include <cstdint>
 
 class CompressedImage {
  public:
@@ -62,4 +62,4 @@ void WriteCompressedFile(uint32_t magic,
                          const CompressedImage& compressed,
                          const char* file_path);
 
-#endif /* end of include guard: COMPRESSED_H_UEQIDML9 */
+#endif  // IMAGE_COMPRESSED_H_

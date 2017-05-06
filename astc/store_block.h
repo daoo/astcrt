@@ -1,8 +1,8 @@
-#ifndef STORE_BLOCK_H_JVFNEQ3W
-#define STORE_BLOCK_H_JVFNEQ3W
+#ifndef ASTC_STORE_BLOCK_H_
+#define ASTC_STORE_BLOCK_H_
 
-#include <stddef.h>
-#include <stdint.h>
+#include <cstddef>
+#include <cstdint>
 
 #include "astc/bitmanip.h"
 #include "astc/colors.h"
@@ -58,11 +58,11 @@ inline void symbolic_to_physical(
   size_t n = BLOCK_WIDTH;
   size_t m = BLOCK_HEIGHT;
 
-  static const bool h_table[RANGE_32 + 1] = {
-      0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1};
+  static const bool h_table[RANGE_32 + 1] = {0, 0, 0, 0, 0, 0,
+                                             1, 1, 1, 1, 1, 1};
 
-  static const uint8_t r_table[RANGE_32 + 1] = {
-      0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7};
+  static const uint8_t r_table[RANGE_32 + 1] = {0x2, 0x3, 0x4, 0x5, 0x6, 0x7,
+                                                0x2, 0x3, 0x4, 0x5, 0x6, 0x7};
 
   bool h = h_table[weight_quant];
   size_t r = r_table[weight_quant];
@@ -104,10 +104,10 @@ inline void symbolic_to_physical(
   // CEM
   orbits8_ptr(pb->data, cem_offset, cem, cem_bits);
 
-  copy_bytes(
-      endpoint_ise, MAXIMUM_ENCODED_COLOR_ENDPOINT_BYTES, pb->data, ced_offset);
+  copy_bytes(endpoint_ise, MAXIMUM_ENCODED_COLOR_ENDPOINT_BYTES, pb->data,
+             ced_offset);
 
   reverse_bytes(weights_ise, MAXIMUM_ENCODED_WEIGHT_BYTES, pb->data + 15);
 }
 
-#endif /* end of include guard: STORE_BLOCK_H_JVFNEQ3W */
+#endif  // ASTC_STORE_BLOCK_H_

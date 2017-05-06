@@ -1,8 +1,8 @@
-#ifndef BITMANIP_H_ERFOQW6D
-#define BITMANIP_H_ERFOQW6D
+#ifndef ASTC_BITMANIP_H_
+#define ASTC_BITMANIP_H_
 
-#include <stddef.h>
-#include <stdint.h>
+#include <cstddef>
+#include <cstdint>
 
 #include "astc/dcheck.h"
 
@@ -165,4 +165,4 @@ inline void copy_bytes(const uint8_t* source,
   }
 }
 
-#endif /* end of include guard: BITMANIP_H_ERFOQW6D */
+#endif  // ASTC_BITMANIP_H_

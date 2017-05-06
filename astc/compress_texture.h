@@ -1,7 +1,7 @@
-#ifndef COMPRESS_TEXTURE_H_VYGPWUPA
-#define COMPRESS_TEXTURE_H_VYGPWUPA
+#ifndef ASTC_COMPRESS_TEXTURE_H_
+#define ASTC_COMPRESS_TEXTURE_H_
 
-#include <stdint.h>
+#include <cstdint>
 
 /**
  * Compress an texture with the ASTC format.
@@ -13,4 +13,4 @@
  */
 void compress_texture(const uint8_t* src, uint8_t* dst, int width, int height);
 
-#endif /* end of include guard: COMPRESS_TEXTURE_H_VYGPWUPA */
+#endif  // ASTC_COMPRESS_TEXTURE_H_

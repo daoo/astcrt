@@ -1,8 +1,8 @@
-#ifndef WEIGHT_QUANTIZATION_H_NZJA6LYF
-#define WEIGHT_QUANTIZATION_H_NZJA6LYF
+#ifndef ASTC_WEIGHTS_QUANTIZE_H_
+#define ASTC_WEIGHTS_QUANTIZE_H_
 
-#include <stddef.h>
-#include <stdint.h>
+#include <cstddef>
+#include <cstdint>
 
 #include "astc/colors.h"
 #include "astc/constants.h"
@@ -85,4 +85,4 @@ void calculate_quantized_weights_rgb(const unorm8_t texels[BLOCK_TEXEL_COUNT],
   }
 }
 
-#endif /* end of include guard: WEIGHT_QUANTIZATION_H_NZJA6LYF */
+#endif  // ASTC_WEIGHTS_QUANTIZE_H_
