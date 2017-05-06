@@ -1,10 +1,10 @@
 #ifndef INTEGER_SEQUENCE_ENCODING_H_XBQZHGDT
 #define INTEGER_SEQUENCE_ENCODING_H_XBQZHGDT
 
-#include "astc/bitmanip.hpp"
-#include "astc/dcheck.hpp"
-#include "astc/integer_sequence_encoding_tables.hpp"
-#include "astc/range.hpp"
+#include "astc/bitmanip.h"
+#include "astc/dcheck.h"
+#include "astc/integer_sequence_encoding_tables.h"
+#include "astc/range.h"
 
 #include <stddef.h>
 #include <stdint.h>

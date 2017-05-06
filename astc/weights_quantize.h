@@ -4,13 +4,13 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "astc/colors.hpp"
-#include "astc/constants.hpp"
-#include "astc/dcheck.hpp"
-#include "astc/misc.hpp"
-#include "astc/range.hpp"
-#include "astc/vector.hpp"
-#include "astc/weights_quantize_table.hpp"
+#include "astc/colors.h"
+#include "astc/constants.h"
+#include "astc/dcheck.h"
+#include "astc/misc.h"
+#include "astc/range.h"
+#include "astc/vector.h"
+#include "astc/weights_quantize_table.h"
 
 uint8_t quantize_weight(range_t weight_quant, size_t weight) {
   DCHECK(weight_quant <= RANGE_32);

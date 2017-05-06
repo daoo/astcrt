@@ -1,11 +1,11 @@
 #include <stddef.h>
 
-#include "astc/colors.hpp"
-#include "astc/constants.hpp"
-#include "astc/dcheck.hpp"
-#include "astc/endpoints_principal_components.hpp"
-#include "astc/matrix.hpp"
-#include "astc/vector.hpp"
+#include "astc/colors.h"
+#include "astc/constants.h"
+#include "astc/dcheck.h"
+#include "astc/endpoints_principal_components.h"
+#include "astc/matrix.h"
+#include "astc/vector.h"
 
 vec3f_t mean(const unorm8_t texels[BLOCK_TEXEL_COUNT], size_t count) {
   vec3i_t sum(0, 0, 0);

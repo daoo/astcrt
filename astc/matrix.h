@@ -1,7 +1,7 @@
 #ifndef MATRIX_H_O8UTJ2NL
 #define MATRIX_H_O8UTJ2NL
 
-#include "astc/vector.hpp"
+#include "astc/vector.h"
 
 #include <stddef.h>
 

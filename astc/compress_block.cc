@@ -1,20 +1,20 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "astc/colors.hpp"
-#include "astc/compress_block.hpp"
-#include "astc/constants.hpp"
-#include "astc/data_size.hpp"
-#include "astc/endpoints.hpp"
-#include "astc/endpoints_encode.hpp"
-#include "astc/endpoints_min_max.hpp"
-#include "astc/endpoints_principal_components.hpp"
-#include "astc/integer_sequence_encoding.hpp"
-#include "astc/misc.hpp"
-#include "astc/range.hpp"
-#include "astc/store_block.hpp"
-#include "astc/vector.hpp"
-#include "astc/weights_quantize.hpp"
+#include "astc/colors.h"
+#include "astc/compress_block.h"
+#include "astc/constants.h"
+#include "astc/data_size.h"
+#include "astc/endpoints.h"
+#include "astc/endpoints_encode.h"
+#include "astc/endpoints_min_max.h"
+#include "astc/endpoints_principal_components.h"
+#include "astc/integer_sequence_encoding.h"
+#include "astc/misc.h"
+#include "astc/range.h"
+#include "astc/store_block.h"
+#include "astc/vector.h"
+#include "astc/weights_quantize.h"
 
 /**
  * Write void extent block bits for LDR mode and unused extent coordinates.

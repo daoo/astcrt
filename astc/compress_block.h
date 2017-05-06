@@ -1,7 +1,7 @@
 #ifndef COMPRESS_BLOCK_H_ATUDCKX5
 #define COMPRESS_BLOCK_H_ATUDCKX5
 
-#include "astc/constants.hpp"
+#include "astc/constants.h"
 
 union unorm8_t;
 struct PhysicalBlock;

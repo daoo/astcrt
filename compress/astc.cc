@@ -5,11 +5,11 @@
 #include <string.h>
 #include <sys/time.h>
 
-#include "astc/compress_texture.hpp"
-#include "astc/constants.hpp"
-#include "image/astc.hpp"
-#include "image/bgra.hpp"
-#include "image/compressed.hpp"
+#include "astc/compress_texture.h"
+#include "astc/constants.h"
+#include "image/astc.h"
+#include "image/bgra.h"
+#include "image/compressed.h"
 
 namespace {
 

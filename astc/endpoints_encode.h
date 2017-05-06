@@ -1,9 +1,9 @@
 #ifndef ENDPOINTS_ENCODE_H_AYO86OBW
 #define ENDPOINTS_ENCODE_H_AYO86OBW
 
-#include "astc/endpoints_quantize.hpp"
-#include "astc/range.hpp"
-#include "astc/vector.hpp"
+#include "astc/endpoints_quantize.h"
+#include "astc/range.h"
+#include "astc/vector.h"
 
 #include <stdint.h>
 

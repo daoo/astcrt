@@ -1,8 +1,8 @@
 #ifndef COLORS_H_BGWU6DC8
 #define COLORS_H_BGWU6DC8
 
-#include "astc/misc.hpp"
-#include "astc/vector.hpp"
+#include "astc/misc.h"
+#include "astc/vector.h"
 
 #include <math.h>
 #include <stdint.h>

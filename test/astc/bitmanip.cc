@@ -1,6 +1,6 @@
-#include "test/catch.hpp"
+#include "test/catch.h"
 
-#include "astc/bitmanip.hpp"
+#include "astc/bitmanip.h"
 
 #include <stddef.h>
 #include <stdint.h>

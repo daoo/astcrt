@@ -1,7 +1,7 @@
-#include "test/catch.hpp"
+#include "test/catch.h"
 
-#include "astc/matrix.hpp"
-#include "astc/vector.hpp"
+#include "astc/matrix.h"
+#include "astc/vector.h"
 
 TEST_CASE("eigen_vector", "[matrix]") {
   float eps = 0.06f;

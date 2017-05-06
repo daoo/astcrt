@@ -3,9 +3,9 @@
 
 #include <stddef.h>
 
-#include "astc/colors.hpp"
-#include "astc/constants.hpp"
-#include "astc/vector.hpp"
+#include "astc/colors.h"
+#include "astc/constants.h"
+#include "astc/vector.h"
 
 void principal_component_analysis(const unorm8_t texels[BLOCK_TEXEL_COUNT],
                                   size_t count,

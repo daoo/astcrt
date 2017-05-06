@@ -1,5 +1,5 @@
-#include "image/astc.hpp"
-#include "image/compressed.hpp"
+#include "image/astc.h"
+#include "image/compressed.h"
 
 #include <stdint.h>
 #include <stdio.h>

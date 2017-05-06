@@ -1,8 +1,8 @@
-#include "test/catch.hpp"
+#include "test/catch.h"
 
-#include "astc/endpoints_principal_components.hpp"
-#include "astc/endpoints_min_max.hpp"
-#include "astc/vector.hpp"
+#include "astc/endpoints_principal_components.h"
+#include "astc/endpoints_min_max.h"
+#include "astc/vector.h"
 
 TEST_CASE("principal_component_analysis", "[pca]") {
   {

@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "astc/dcheck.hpp"
+#include "astc/dcheck.h"
 
 inline bool getbit(size_t number, size_t n) {
   return (number >> n) & 1;

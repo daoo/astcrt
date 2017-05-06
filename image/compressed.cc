@@ -1,4 +1,4 @@
-#include "compressed.hpp"
+#include "compressed.h"
 
 #include <stdint.h>
 #include <stdio.h>

@@ -3,7 +3,7 @@
 
 #include <math.h>
 
-#include "astc/dcheck.hpp"
+#include "astc/dcheck.h"
 
 template <typename T>
 union vec3_t {

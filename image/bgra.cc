@@ -1,4 +1,4 @@
-#include "image/bgra.hpp"
+#include "image/bgra.h"
 
 #include <stdint.h>
 #include <stdio.h>

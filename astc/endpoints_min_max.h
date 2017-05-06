@@ -3,11 +3,11 @@
 
 #include <stddef.h>
 
-#include "astc/colors.hpp"
-#include "astc/constants.hpp"
-#include "astc/dcheck.hpp"
-#include "astc/misc.hpp"
-#include "astc/vector.hpp"
+#include "astc/colors.h"
+#include "astc/constants.h"
+#include "astc/dcheck.h"
+#include "astc/misc.h"
+#include "astc/vector.h"
 
 void find_min_max(const unorm8_t texels[BLOCK_TEXEL_COUNT],
                   size_t count,

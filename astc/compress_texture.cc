@@ -1,10 +1,10 @@
 #include <stddef.h>
 
-#include "astc/colors.hpp"
-#include "astc/compress_block.hpp"
-#include "astc/compress_texture.hpp"
-#include "astc/constants.hpp"
-#include "astc/store_block.hpp"
+#include "astc/colors.h"
+#include "astc/compress_block.h"
+#include "astc/compress_texture.h"
+#include "astc/constants.h"
+#include "astc/store_block.h"
 
 namespace {
 

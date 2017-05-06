@@ -4,13 +4,13 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "astc/bitmanip.hpp"
-#include "astc/colors.hpp"
-#include "astc/constants.hpp"
-#include "astc/dcheck.hpp"
-#include "astc/endpoints.hpp"
-#include "astc/integer_sequence_encoding.hpp"
-#include "astc/range.hpp"
+#include "astc/bitmanip.h"
+#include "astc/colors.h"
+#include "astc/constants.h"
+#include "astc/dcheck.h"
+#include "astc/endpoints.h"
+#include "astc/integer_sequence_encoding.h"
+#include "astc/range.h"
 
 struct PhysicalBlock {
   uint8_t data[BLOCK_BYTES];

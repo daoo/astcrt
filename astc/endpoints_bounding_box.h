@@ -3,10 +3,10 @@
 
 #include <stddef.h>
 
-#include "astc/colors.hpp"
-#include "astc/constants.hpp"
-#include "astc/misc.hpp"
-#include "astc/vector.hpp"
+#include "astc/colors.h"
+#include "astc/constants.h"
+#include "astc/misc.h"
+#include "astc/vector.h"
 
 void bounding_box(const unorm8_t* texels,
                   size_t count,

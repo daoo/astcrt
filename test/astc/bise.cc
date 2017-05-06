@@ -1,7 +1,7 @@
-#include "test/catch.hpp"
+#include "test/catch.h"
 
-#include "astc/integer_sequence_encoding.hpp"
-#include "astc/range.hpp"
+#include "astc/integer_sequence_encoding.h"
+#include "astc/range.h"
 
 #include <stdint.h>
 

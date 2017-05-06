@@ -3,7 +3,7 @@
 
 #include <stddef.h>
 
-#include "image/color.hpp"
+#include "image/color.h"
 
 class BgraImage {
  public:
