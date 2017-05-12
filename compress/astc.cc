@@ -46,6 +46,14 @@ int main(int argc, const char** argv) {
   try {
     BgraImage image = ReadTGAFile(input);
 
+    if (image.width % BLOCK_WIDTH != 0 || image.height % BLOCK_HEIGHT != 0) {
+      fprintf(stderr,
+              "Error: image size (%ldx%ld) not a multiple of block size "
+              "(%ldx%ld)\n",
+              image.width, image.height, BLOCK_WIDTH, BLOCK_HEIGHT);
+      return 1;
+    }
+
     CompressedImage compressed(image.width, image.height, BLOCK_WIDTH,
                                BLOCK_HEIGHT, BLOCK_BYTES);
 
