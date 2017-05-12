@@ -115,6 +115,7 @@ BgraImage ReadTGAFile(const char* file_path) {
       image.buffer[i].channels.b = ptr_[0];
       image.buffer[i].channels.a = 0xFF;
     }
+    delete[] ptr;
   }
 
   fclose(file);
