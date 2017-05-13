@@ -16,3 +16,5 @@ CXX="g++" CXXFLAGS="-Wall -Wextra -Weffc++ -Wno-padded -g -fdiagnostics-color=al
 
 CXX="g++" CXXFLAGS="-Ofast -march=native -flto -DNDEBUG" \
   meson "out_gcc_release"
+
+CXX="afl-g++" CXXFLAGS="-Ofast -march=native -flto -DNDEBUG" meson "out_afl_release"
