@@ -1,7 +1,6 @@
 #include "image/bgra.h"
 
-#include <cstdint>
-#include <cstdio>
+#include <fstream>
 
 struct TGAHeader {
   uint8_t id_length;
@@ -19,9 +18,9 @@ struct TGAHeader {
 };
 
 void WriteTGAFile(const BgraImage& image, const char* file_path) {
-  FILE* file = fopen(file_path, "w");
-  if (!file) {
-    throw "could not open file for writing";
+  std::ofstream file(file_path, std::ios::binary);
+  if (file.fail()) {
+    throw "could not open file for reading";
   }
 
   TGAHeader hdr;
@@ -47,67 +46,56 @@ void WriteTGAFile(const BgraImage& image, const char* file_path) {
   hdr.pixel_depth = 32;
   hdr.image_descriptor = 0x08;
 
-  fwrite(&hdr, 1, sizeof(TGAHeader), file);
-  fwrite(image.buffer, 1, image.buffer_size, file);
-  fclose(file);
+  file.write(reinterpret_cast<char*>(&hdr), sizeof(TGAHeader));
+  file.write(reinterpret_cast<char*>(image.buffer),
+             static_cast<std::streamsize>(image.buffer_size));
 }
 
 BgraImage ReadTGAFile(const char* file_path) {
-  FILE* file = fopen(file_path, "r");
-  if (!file) {
+  std::ifstream file(file_path, std::ios::binary);
+  if (file.fail()) {
     throw "could not open file for reading";
   }
 
   TGAHeader hdr;
-  fread(&hdr, 1, sizeof(TGAHeader), file);
+  file.read(reinterpret_cast<char*>(&hdr), sizeof(TGAHeader));
 
   if (hdr.color_map_type != 0x00) {
-    fclose(file);
     throw "color map images not supported";
   }
-
   if (hdr.image_type != 0x02) {
-    fclose(file);
     throw "only uncompressed true color supported";
   }
-
   if (((hdr.origin_x[1] << 8) | hdr.origin_x[0]) != 0) {
-    fclose(file);
     throw "origin x should be 0";
   }
-
   if (((hdr.origin_y[1] << 8) | hdr.origin_y[0]) != 0) {
-    fclose(file);
     throw "origin y should be 0";
   }
-
   if (hdr.pixel_depth != 24 && hdr.pixel_depth != 32) {
-    fclose(file);
     throw "unsupported pixel depth";
   }
-
   if (hdr.pixel_depth == 24 && hdr.image_descriptor != 0) {
-    fclose(file);
     throw "incorrect image descriptor for 24 bit pixel depth";
   }
-
   if (hdr.pixel_depth == 32 && hdr.image_descriptor != 0x08) {
-    fclose(file);
     throw "incorrect image descriptor for 32 bit pixel depth";
   }
 
-  fseek(file, hdr.id_length, SEEK_CUR);
+  file.seekg(hdr.id_length, std::ios::seekdir());
 
   size_t width = (hdr.width[1] << 8) | hdr.width[0];
   size_t height = (hdr.height[1] << 8) | hdr.height[0];
 
   BgraImage image(width, height);
   if (hdr.pixel_depth == 32) {
-    fread(image.buffer, 1, image.buffer_size, file);
+    file.read(reinterpret_cast<char*>(image.buffer),
+              static_cast<std::streamsize>(image.buffer_size));
   } else if (hdr.pixel_depth == 24) {
     size_t byte_count = image.pixel_count * 3;
     uint8_t* ptr = new uint8_t[byte_count];
-    fread(ptr, 1, byte_count, file);
+    file.read(reinterpret_cast<char*>(ptr),
+              static_cast<std::streamsize>(byte_count));
     for (size_t i = 0; i < image.pixel_count; ++i) {
       uint8_t* ptr_ = ptr + i * 3;
       image.buffer[i].channels.r = ptr_[2];
@@ -117,8 +105,6 @@ BgraImage ReadTGAFile(const char* file_path) {
     }
     delete[] ptr;
   }
-
-  fclose(file);
 
   return image;
 }

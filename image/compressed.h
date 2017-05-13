@@ -56,10 +56,6 @@ class CompressedImage {
   uint8_t* buffer;
 };
 
-CompressedImage ReadCompressedFile(uint32_t magic, const char* file_path);
-
-void WriteCompressedFile(uint32_t magic,
-                         const CompressedImage& compressed,
-                         const char* file_path);
+void WriteASTCFile(const CompressedImage&, const char* file_path);
 
 #endif  // IMAGE_COMPRESSED_H_

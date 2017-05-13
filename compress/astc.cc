@@ -8,7 +8,6 @@
 
 #include "astc/compress_texture.h"
 #include "astc/constants.h"
-#include "image/astc.h"
 #include "image/bgra.h"
 #include "image/compressed.h"
 

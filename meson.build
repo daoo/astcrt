@@ -10,7 +10,6 @@ astc = static_library(
 
 image = static_library(
     'image',
-    'image/astc.cc',
     'image/bgra.cc',
     'image/compressed.cc'
 )
