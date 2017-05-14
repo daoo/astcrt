@@ -66,33 +66,6 @@ def print_partitions_tables():
     print_array_rec((safe_head(partitions, -1) for partitions in lookup_table), "%#x")
     sys.stdout.write(";\n")
 
-def print_data_size_info(block_width, block_height, cem, partitions, weight_range):
-    config_bits, weight_bits, remaining_bits = data_size(
-            partitions = partitions,
-            single_cem = True,
-            block_width = block_width,
-            block_height = block_height,
-            block_depth = 1,
-            dual_plane = False,
-            weight_range = weight_range
-        )
-
-    ce_values = cem_values_count(cem, partitions)
-    ce_range = color_endpoint_range(cem, remaining_bits, partitions)
-    cem_bits = compute_bise_bitcount(ce_values, ce_range)
-
-    print("block width:", block_width)
-    print("block height:", block_height)
-    print("config bits:", config_bits)
-    print("weight count:", block_width * block_height)
-    print("weight range:", RANGE_CARDINALITY_TABLE[weight_range])
-    print("weight bits:", weight_bits)
-    print("remaining bits:", remaining_bits)
-    print("color endpoint values:", ce_values)
-    print("color endpoint range:", RANGE_CARDINALITY_TABLE[ce_range])
-    print("color endpoint bits:", cem_bits)
-    print("unused bits:", remaining_bits - cem_bits)
-
 def print_data_size_table(block_width, block_height):
     sys.stdout.write("const int8_t color_endpoint_range_table[2][12][16] = ")
     print_array_rec(color_endpoint_range_table(block_width, block_height), "%d")
@@ -116,8 +89,7 @@ def print_usage(prog):
          "    bise\n"
          "    partitions\n"
          "    datasize\n"
-         "    quantize\n"
-         "    data-info cem partitions weightrange\n") % prog)
+         "    quantize\n") % prog)
 
 if len(sys.argv) == 1:
     print_usage(sys.argv[0])
@@ -135,14 +107,6 @@ try:
             print_data_size_table(4, 4)
         elif arg == "quantize":
             print_color_quantization_tables()
-        elif arg == "data-info":
-            print_data_size_info(
-                    int(sys.argv[i+1]),
-                    int(sys.argv[i+2]),
-                    int(sys.argv[i+3]),
-                    int(sys.argv[i+4]),
-                    int(sys.argv[i+5]))
-            i = i+5
         else:
             raise ValueError("unknown mode " + arg)
 
