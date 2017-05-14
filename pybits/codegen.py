@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
-from bise import compute_bise_bitcount, trits_from_integer_table, integer_from_trits_table, quints_from_integer_table, integer_from_quints_table
-from datasize import data_size, cem_values_count, color_endpoint_range, color_endpoint_range_table
-from partitions import compute_partitioning_table, compute_partitioning_lookup_table, compute_partitioning_lookup_table_equality
-from quantize import color_quantize_table, color_unquantize_table
-from range import RANGE_CARDINALITY_TABLE
+import bise
+import datasize
+import partitions
+import quantize
 import sys
+
 
 def safe_head(lst, default):
     try:
@@ -13,74 +13,89 @@ def safe_head(lst, default):
     except:
         return default
 
-def print_array_rec(element, fmt):
+
+def print_array_rec(file, element, fmt):
     if isinstance(element, int):
-        sys.stdout.write(fmt % element)
+        file.write(fmt % element)
     elif isinstance(element, tuple) or isinstance(element, list):
-        print_array_rec(iter(element), fmt)
+        print_array_rec(file, iter(element), fmt)
     else:
         first = next(element)
 
-        sys.stdout.write("{")
-        print_array_rec(first, fmt)
+        file.write("{")
+        print_array_rec(file, first, fmt)
         for x in element:
-            sys.stdout.write(",")
-            print_array_rec(x, fmt)
-        sys.stdout.write("}")
+            file.write(",")
+            print_array_rec(file, x, fmt)
+        file.write("}")
 
-def print_bise_tables():
-    trits_from_integer  = trits_from_integer_table()
-    integer_from_trits  = integer_from_trits_table(trits_from_integer)
-    quints_from_integer = quints_from_integer_table()
-    integer_from_quints = integer_from_quints_table(quints_from_integer)
 
-    sys.stdout.write("const uint8_t trits_from_integer[256][5] = ")
-    print_array_rec(iter(trits_from_integer), "%d")
-    sys.stdout.write(";\n\n")
+def print_bise_tables(file):
+    trits_from_integer = bise.trits_from_integer_table()
+    integer_from_trits = bise.integer_from_trits_table(trits_from_integer)
+    quints_from_integer = bise.quints_from_integer_table()
+    integer_from_quints = bise.integer_from_quints_table(quints_from_integer)
 
-    sys.stdout.write("const uint8_t integer_from_trits[3][3][3][3][3] = ")
-    print_array_rec(iter(integer_from_trits), "%d")
-    sys.stdout.write(";\n\n")
+    file.write("const uint8_t trits_from_integer[256][5] = ")
+    print_array_rec(file, iter(trits_from_integer), "%d")
+    file.write(";\n\n")
 
-    sys.stdout.write("const uint8_t quints_from_integer[128][3] = ")
-    print_array_rec(iter(quints_from_integer), "%d")
-    sys.stdout.write(";\n\n")
+    file.write("const uint8_t integer_from_trits[3][3][3][3][3] = ")
+    print_array_rec(file, iter(integer_from_trits), "%d")
+    file.write(";\n\n")
 
-    sys.stdout.write("const uint8_t integer_from_quints[5][5][5] = ")
-    print_array_rec(iter(integer_from_quints), "%d")
-    sys.stdout.write(";\n")
+    file.write("const uint8_t quints_from_integer[128][3] = ")
+    print_array_rec(file, iter(quints_from_integer), "%d")
+    file.write(";\n\n")
 
-def print_partitions_tables():
-    table = list(compute_partitioning_table(
-            partition_count = 2,
-            block_width = 4,
-            block_height = 4))
+    file.write("const uint8_t integer_from_quints[5][5][5] = ")
+    print_array_rec(file, iter(integer_from_quints), "%d")
+    file.write(";\n")
 
-    sys.stdout.write("const uint16_t partition_2_4x4_mask_table[1024] = ")
-    print_array_rec((part.partition_mask for part in table), "%#x")
-    sys.stdout.write(";\n\n")
 
-    lookup_table = compute_partitioning_lookup_table(table)
+def print_partitions_tables(file):
+    table = list(partitions.compute_partitioning_table(
+            partition_count=2,
+            block_width=4,
+            block_height=4))
 
-    sys.stdout.write("const int16_t partition_2_4x4_lookup_table[65536] = ")
-    print_array_rec((safe_head(partitions, -1) for partitions in lookup_table), "%#x")
-    sys.stdout.write(";\n")
+    file.write("const uint16_t partition_2_4x4_mask_table[1024] = ")
+    print_array_rec(file, (part.partition_mask for part in table), "%#x")
+    file.write(";\n\n")
 
-def print_data_size_table(block_width, block_height):
-    sys.stdout.write("const int8_t color_endpoint_range_table[2][12][16] = ")
-    print_array_rec(color_endpoint_range_table(block_width, block_height), "%d")
-    sys.stdout.write(";\n")
+    lookup_table = partitions.compute_partitioning_lookup_table(table)
 
-def print_color_quantization_tables():
-    unquantize_table = color_unquantize_table()
+    file.write("const int16_t partition_2_4x4_lookup_table[65536] = ")
+    print_array_rec(
+        file,
+        (safe_head(partitions, -1) for partitions in lookup_table),
+        "%#x")
+    file.write(";\n")
 
-    sys.stdout.write("const uint8_t color_unquantize_table[21][256] = ")
-    print_array_rec(iter(unquantize_table), "%d")
-    sys.stdout.write(";\n\n")
 
-    sys.stdout.write("const uint8_t color_quantize_table[21][256] = ")
-    print_array_rec(iter(color_quantize_table(unquantize_table)), "%d")
-    sys.stdout.write(";\n")
+def print_data_size_table(file, block_width, block_height):
+    file.write("const int8_t color_endpoint_range_table[2][12][16] = ")
+    print_array_rec(
+        file,
+        datasize.color_endpoint_range_table(block_width, block_height),
+        "%d")
+    file.write(";\n")
+
+
+def print_color_quantization_tables(file):
+    unquantize_table = quantize.color_unquantize_table()
+
+    file.write("const uint8_t color_unquantize_table[21][256] = ")
+    print_array_rec(file, iter(unquantize_table), "%d")
+    file.write(";\n\n")
+
+    file.write("const uint8_t color_quantize_table[21][256] = ")
+    print_array_rec(
+        file,
+        iter(quantize.color_quantize_table(unquantize_table)),
+        "%d")
+    file.write(";\n")
+
 
 def print_usage(prog):
     sys.stderr.write(
@@ -91,6 +106,7 @@ def print_usage(prog):
          "    datasize\n"
          "    quantize\n") % prog)
 
+
 if len(sys.argv) == 1:
     print_usage(sys.argv[0])
 
@@ -100,13 +116,13 @@ try:
         arg = sys.argv[i]
 
         if arg == "bise":
-            print_bise_tables()
+            print_bise_tables(sys.stdout)
         elif arg == "partitions":
-            print_partitions_tables()
+            print_partitions_tables(sys.stdout)
         elif arg == "datasize":
-            print_data_size_table(4, 4)
+            print_data_size_table(sys.stdout, 4, 4)
         elif arg == "quantize":
-            print_color_quantization_tables()
+            print_color_quantization_tables(sys.stdout)
         else:
             raise ValueError("unknown mode " + arg)
 
