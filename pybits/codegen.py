@@ -14,20 +14,57 @@ def safe_head(lst, default):
         return default
 
 
-def print_array_rec(file, element, fmt):
+def compute_dimensions(array):
+    if isinstance(array, list):
+        yield len(array)
+        yield from compute_dimensions(array[-1])
+
+
+def pretty_array(element, fmt):
     if isinstance(element, int):
-        file.write(fmt % element)
+        return fmt % element
     elif isinstance(element, tuple) or isinstance(element, list):
-        print_array_rec(file, iter(element), fmt)
+        return pretty_array(iter(element), fmt)
     else:
         first = next(element)
 
-        file.write("{")
-        print_array_rec(file, first, fmt)
+        out = "{"
+        out += pretty_array(first, fmt)
         for x in element:
-            file.write(",")
-            print_array_rec(file, x, fmt)
-        file.write("}")
+            out += ","
+            out += pretty_array(x, fmt)
+        out += "}"
+        return out
+
+
+def pretty_dimensions(dimensions):
+    out = ""
+    for dimension in dimensions:
+        out += "[" + str(dimension) + "]"
+    return out
+
+header_template = """#ifndef {guard}
+#define {guard}
+
+{content}
+
+#endif
+"""
+
+array_template = "const {type} {name}{dimensions} = {array};"
+
+
+def build_header(guard, content):
+    return header_template.format(guard=guard, content=content)
+
+
+def build_array(type, name, array):
+    return array_template.format(
+        name=name,
+        type=type,
+        dimensions=pretty_dimensions(compute_dimensions(array)),
+        array=pretty_array(array, "%d"),
+    )
 
 
 def print_bise_tables(file):
@@ -36,65 +73,54 @@ def print_bise_tables(file):
     quints_from_integer = bise.quints_from_integer_table()
     integer_from_quints = bise.integer_from_quints_table(quints_from_integer)
 
-    file.write("const uint8_t trits_from_integer[256][5] = ")
-    print_array_rec(file, iter(trits_from_integer), "%d")
-    file.write(";\n\n")
-
-    file.write("const uint8_t integer_from_trits[3][3][3][3][3] = ")
-    print_array_rec(file, iter(integer_from_trits), "%d")
-    file.write(";\n\n")
-
-    file.write("const uint8_t quints_from_integer[128][3] = ")
-    print_array_rec(file, iter(quints_from_integer), "%d")
-    file.write(";\n\n")
-
-    file.write("const uint8_t integer_from_quints[5][5][5] = ")
-    print_array_rec(file, iter(integer_from_quints), "%d")
-    file.write(";\n")
+    file.write(build_header(
+        "ASTC_TABLES_INTEGER_SEQUENCE_ENCODING_H_",
+        build_array("uint8_t", "integer_from_trits", integer_from_trits) +
+        '\n' +
+        build_array("uint8_t", "integer_from_quints", integer_from_quints)
+    ))
 
 
 def print_partitions_tables(file):
     table = list(partitions.compute_partitioning_table(
-            partition_count=2,
-            block_width=4,
-            block_height=4))
-
-    file.write("const uint16_t partition_2_4x4_mask_table[1024] = ")
-    print_array_rec(file, (part.partition_mask for part in table), "%#x")
-    file.write(";\n\n")
-
+        partition_count=2,
+        block_width=4,
+        block_height=4))
     lookup_table = partitions.compute_partitioning_lookup_table(table)
 
-    file.write("const int16_t partition_2_4x4_lookup_table[65536] = ")
-    print_array_rec(
-        file,
-        (safe_head(partitions, -1) for partitions in lookup_table),
-        "%#x")
-    file.write(";\n")
+    file.write(build_header(
+        "ASTC_TABLES_PARTITIONS_H_",
+        build_array(
+            "uint16_t",
+            "partition_2_4x4_mask_table",
+            [part.partition_mask for part in table]
+        ) + '\n' +
+        build_array(
+            "int16_t",
+            "partition_2_4x4_lookup_table",
+            [safe_head(parts, -1) for parts in lookup_table]
+        )
+    ))
 
 
 def print_data_size_table(file, block_width, block_height):
-    file.write("const int8_t color_endpoint_range_table[2][12][16] = ")
-    print_array_rec(
-        file,
-        datasize.color_endpoint_range_table(block_width, block_height),
-        "%d")
-    file.write(";\n")
+    table = datasize.color_endpoint_range_table(block_width, block_height)
+    file.write(build_header(
+        "ASTC_TABLES_DATA_SIZE_H_",
+        build_array("int8_t", "color_endpoint_range_table", table)
+    ))
 
 
 def print_color_quantization_tables(file):
     unquantize_table = quantize.color_unquantize_table()
+    quantize_table = quantize.color_quantize_table(unquantize_table)
 
-    file.write("const uint8_t color_unquantize_table[21][256] = ")
-    print_array_rec(file, iter(unquantize_table), "%d")
-    file.write(";\n\n")
-
-    file.write("const uint8_t color_quantize_table[21][256] = ")
-    print_array_rec(
-        file,
-        iter(quantize.color_quantize_table(unquantize_table)),
-        "%d")
-    file.write(";\n")
+    file.write(build_header(
+        "ASTC_TABLES_COLOR_QUANTIZATION_H_",
+        build_array("uint8_t", "color_unquantize_table", unquantize_table) +
+        '\n' +
+        build_array("uint8_t", "color_quantize_table", quantize_table)
+    ))
 
 
 def print_usage(prog):
@@ -107,28 +133,22 @@ def print_usage(prog):
          "    quantize\n") % prog)
 
 
-if len(sys.argv) == 1:
+def main(kind, path):
+    file = open(path, 'w') if path != '-' else sys.stdout
+    if kind == "bise":
+        print_bise_tables(file)
+    elif kind == "partitions":
+        print_partitions_tables(file)
+    elif kind == "datasize":
+        print_data_size_table(file, 4, 4)
+    elif kind == "quantize":
+        print_color_quantization_tables(file)
+    else:
+        sys.stderr.write("Error: unknown mode {}\n".format(kind))
+        sys.exit(1)
+
+
+if len(sys.argv) != 3:
     print_usage(sys.argv[0])
-
-try:
-    i = 1
-    while i < len(sys.argv):
-        arg = sys.argv[i]
-
-        if arg == "bise":
-            print_bise_tables(sys.stdout)
-        elif arg == "partitions":
-            print_partitions_tables(sys.stdout)
-        elif arg == "datasize":
-            print_data_size_table(sys.stdout, 4, 4)
-        elif arg == "quantize":
-            print_color_quantization_tables(sys.stdout)
-        else:
-            raise ValueError("unknown mode " + arg)
-
-        i = i+1
-
-except ValueError as exception:
-    sys.stderr.write("Error: %s\n" % exception)
-    print_usage()
-    sys.exit(1)
+else:
+    main(sys.argv[1], sys.argv[2])

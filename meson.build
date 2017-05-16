@@ -1,12 +1,9 @@
 project('astcrt', 'cpp', default_options: ['cpp_std=c++1z'])
 
-astc = static_library(
-    'astc',
-    'astc/compress_block.cc',
-    'astc/compress_texture.cc',
-    'astc/endpoints_principal_components.cc',
-    'astc/matrix.cc'
-)
+codegen = find_program('pybits/codegen.py')
+incdir = include_directories('.')
+
+subdir('astc')
 
 image = static_library(
     'image',

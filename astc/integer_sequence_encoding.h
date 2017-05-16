@@ -6,7 +6,7 @@
 
 #include "astc/bitmanip.h"
 #include "astc/dcheck.h"
-#include "astc/integer_sequence_encoding_tables.h"
+#include "astc/tables_integer_sequence_encoding.h"
 #include "astc/range.h"
 
 /**

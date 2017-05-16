@@ -4,10 +4,10 @@
 #include <cstddef>
 #include <cstdint>
 
-#include "astc/data_size_table.h"
 #include "astc/dcheck.h"
 #include "astc/endpoints.h"
 #include "astc/range.h"
+#include "astc/tables_data_size.h"
 
 range_t endpoint_quantization(size_t partitions,
                               range_t weight_quant,

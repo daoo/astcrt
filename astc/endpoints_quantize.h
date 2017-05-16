@@ -4,8 +4,8 @@
 #include <cstdint>
 
 #include "astc/dcheck.h"
-#include "astc/endpoint_quantize_tables.h"
 #include "astc/range.h"
+#include "astc/tables_color_quantization.h"
 #include "astc/vector.h"
 
 uint8_t quantize_color(range_t quant, int c) {

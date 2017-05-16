@@ -216,3 +216,14 @@ def integer_from_quints_table(quints):
             ]
             for q2 in range(5)
         ]
+
+if __name__ == "__main__":
+    trits_from_integer = trits_from_integer_table()
+    integer_from_trits = integer_from_trits_table(trits_from_integer)
+    quints_from_integer = quints_from_integer_table()
+    integer_from_quints = integer_from_quints_table(quints_from_integer)
+
+    print(trits_from_integer)
+    print(integer_from_trits)
+    print(quints_from_integer)
+    print(integer_from_quints)

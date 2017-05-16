@@ -122,13 +122,16 @@ def color_endpoint_range_table(block_width, block_height):
             return -1
 
     return \
-        (
-            (
-                (
+        [
+            [
+                [
                     handle_except(partitions, cem, weight_range)
                     for cem in range(CEM_MAX)
-                )
+                ]
                 for weight_range in range(WEIGHT_RANGE_MAX)
-            )
+            ]
             for partitions in [1, 2]
-        )
+        ]
+
+if __name__ == "__main__":
+    print(color_endpoint_range_table(4, 4))

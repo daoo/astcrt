@@ -277,3 +277,13 @@ def compute_partitioning_lookup_table_equality(table):
                 yield index
 
         yield -1
+
+
+if __name__ == "__main__":
+    table = list(compute_partitioning_table(
+        partition_count=2,
+        block_width=4,
+        block_height=4))
+    print([list(part) for part in table])
+    lookup_table = compute_partitioning_lookup_table(table)
+    print(list(lookup_table))

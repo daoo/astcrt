@@ -122,15 +122,6 @@ def color_unquantize_table():
 
 if __name__ == "__main__":
     unquantize_table = color_unquantize_table()
-
-    print_array(
-            "const uint8_t color_unquantize_table[21][256] =\n",
-            iter(unquantize_table),
-            ";\n",
-            "%d")
-    print()
-    print_array(
-            "const uint8_t color_quantize_table[21][256] =\n",
-            iter(color_quantize_table(unquantize_table)),
-            ";\n",
-            "%d")
+    quantize_table = color_quantize_table(unquantize_table)
+    print(unquantize_table)
+    print(quantize_table)
