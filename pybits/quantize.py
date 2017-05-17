@@ -81,24 +81,20 @@ def unquantize_color(i, quant):
 
     assert False
 
-def find_closest(lst, value):
-    assert isinstance(lst, list)
-    assert len(lst) > 0
+def find_closest(unquantized, value):
+    assert isinstance(unquantized, list)
+    assert len(unquantized) > 0
     assert isinstance(value, int)
 
-    best_index = 0
-    best_elem  = lst[best_index]
-    best_diff  = abs(value - best_elem)
+    class Item:
+        def __init__(self, index):
+            self.index = index
+            self.cost = abs(value - unquantized[self.index])
 
-    for i in range(1, len(lst)):
-        elem = lst[i]
-        diff = abs(value - elem)
-        if diff < best_diff:
-            best_index = i
-            best_diff  = diff
-            best_elem  = elem
+        def __lt__(self, other):
+            return self.cost < other.cost
 
-    return best_index
+    return min(map(Item, range(len(unquantized)))).index
 
 def color_quantize_table(color_unquantize_table):
     return \
