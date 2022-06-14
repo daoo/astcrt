@@ -24,6 +24,7 @@ tests = executable(
     'test/astc/bitmanip.cc',
     'test/astc/matrix.cc',
     'test/astc/pca.cc',
+    tables_integer_sequence_encoding,
     link_with: [astc]
 )
 
